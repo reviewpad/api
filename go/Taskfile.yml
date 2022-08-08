@@ -1,0 +1,38 @@
+# Copyright (C) 2022 Explore.dev, Unipessoal Lda - All Rights Reserved
+# Use of this source code is governed by a license that can be
+# found in the LICENSE file
+
+version: "3"
+
+tasks:
+  install-deps:
+    summary: |
+      Install dependencies.
+
+    cmds:
+      - . installdep.sh
+
+  build:
+    deps:
+      - gen-proto
+    summary: |
+      Builds Go files.
+
+      Run with --watch or -w to watch for changes on Go files.
+    cmds:
+      - go build ./...
+    sources:
+      - ./**/*.go
+
+  gen-proto:
+    summary: |
+      Generates protobuf written in Go.
+
+      Run with --watch or -w to watch for changes on proto files.
+    cmds:
+      - . genproto.sh
+    sources:
+      - ../pb/**/*.proto
+    generates:
+      - entities/**/*.go
+      - services/**/*.go
