@@ -1,0 +1,96 @@
+// Copyright 2022 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+import "entities/span.proto";
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+enum AgnosticType {
+    UNSPECIFIED = 0;
+    CLASS = 1;
+    INTERFACE = 2;
+    ENUM = 3;
+    FUNCTION = 4;
+    METHOD = 5;
+    PROPERTY = 6;
+    TYPE = 7;
+    VARIABLE = 8;
+    EXPORT = 9;
+    CONSTANT = 10;
+    CONSTRUCTOR = 11;
+    OTHER = 12;
+}
+
+message WordReference {
+    int32 line = 1;
+    WordSpan span = 2;
+}
+
+message Symbols {
+    map<string, File> files = 1;
+    map<string, Symbol> symbols = 2;
+}
+
+message Symbol {
+    string name = 1;
+    //Uniquely identifies symbol in analysis
+    string id = 2;
+    Definition definition = 3;
+    string type = 4;
+    map<string, FileUsages> fileUsages = 5;
+    //Uniquely identifies symbol in parent. Must not depend on file path, but may change if symbol name or type changes.
+    string local_id = 6;
+    int32 type_rank = 7;
+    map<string, string> inner_symbols = 8; //Local id to global id
+    string parent = 9; //Parent id
+    AgnosticType agnostic_type = 10;
+    repeated SymbolDocumentation code_comments = 11;
+    SymbolDocumentation signature = 12;
+}
+
+message SymbolDocumentation {
+    string code = 1;
+    Span span = 2;
+}
+
+message FileUsages {
+    string file_path = 1;
+    repeated ReferenceBlock imports = 2;
+    repeated ReferenceBlock usages = 3;
+}
+
+message Context {
+    string chunk = 1;
+    Span block = 2;
+}
+
+message Definition {
+    string file_path = 1;
+    ReferenceBlock main_definition = 2;
+    repeated ReferenceBlock declarations = 3;
+}
+
+message ReferenceBlock {
+    Context context = 1;
+    WordReference reference = 2;
+    SpanAST signature = 3;
+    SpanAST body = 4;
+}
+
+message SpanAST {
+    repeated string ast_tokens = 1;
+    Span block = 2;
+    string code = 3;
+}
+
+message File {
+    string path = 1;
+    string blob_id = 2;
+    int32 num_lines = 3;
+    map<string, string> symbols = 4; //Local id to symbol id
+}

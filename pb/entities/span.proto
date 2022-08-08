@@ -1,0 +1,24 @@
+// Copyright 2022 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+message Span {
+    Location start = 1;
+    Location end = 2;
+}
+
+message Location {
+    int32 line = 1;
+    int32 offset = 2;
+}
+
+message WordSpan {
+	int32 start_column = 1;
+	int32 end_column = 2;
+}

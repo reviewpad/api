@@ -1,0 +1,29 @@
+// Copyright 2022 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package services;
+
+import "entities/language.proto";
+import "entities/diff.proto";
+
+option go_package = "github.com/reviewpad/api/go/services";
+
+service Semantic {
+    rpc GetSymbols(GetSymbolsRequest) returns (GetSymbolsReply) {}
+}
+
+message GetSymbolsRequest {
+    string uri = 1;
+    string commit_id = 2;
+    string blob_id = 3;
+    string filepath = 4;
+    bytes blob = 5;
+    entities.ResolveFileDiff diff = 6;
+}
+
+message GetSymbolsReply {
+    entities.Symbols symbols = 1;
+}
