@@ -2,7 +2,15 @@
 
 This repository contains the gRPC specifications used in Reviewpad.
 
-For more information on how to generate the sources check the [README.md](go/README.md).
+For more information on how to generate the Golang sources check the [README.md](go/README.md).
+
+## Build
+
+To build the Rust library run:
+
+```
+cargo build
+```
 
 ## License
 
