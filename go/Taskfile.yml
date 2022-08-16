@@ -15,6 +15,7 @@ tasks:
   build:
     deps:
       - gen-proto
+      - gomock
     summary: |
       Builds Go files.
 
@@ -23,6 +24,16 @@ tasks:
       - go build ./...
     sources:
       - ./**/*.go
+
+  gomock:
+    summary: |
+      Generates mocks for services.
+
+      Run with --watch or -w to watch for changes on generated files.
+    cmds:
+      - mockgen --build_flags=--mod=mod --destination services_mocks/semantic_service.go --package services_mocks github.com/reviewpad/api/go/services SemanticClient
+    sources:
+      - ./services/*.go
 
   gen-proto:
     summary: |
