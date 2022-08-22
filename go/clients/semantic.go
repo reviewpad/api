@@ -10,17 +10,16 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func NewSemanticClient(endpoint string) (services.SemanticClient, error) {
+func NewSemanticClient(endpoint string) (services.SemanticClient, *grpc.ClientConn, error) {
 	defaultOptions := grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(419430400))
 	transportCredentials := grpc.WithTransportCredentials(insecure.NewCredentials())
 
 	semanticConnection, err := grpc.Dial(endpoint, transportCredentials, defaultOptions)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	defer semanticConnection.Close()
 
 	semanticClient := services.NewSemanticClient(semanticConnection)
 
-	return semanticClient, nil
+	return semanticClient, semanticConnection, nil
 }
