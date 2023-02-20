@@ -142,12 +142,3 @@ enum Direction {
     UP = 0;
     DOWN = 1;
 }
-
-message ResolveFileDiff {
-    repeated ResolveBlockDiff blocks = 1;
-}
-
-message ResolveBlockDiff {
-    int32 start = 1;
-    int32 end = 2;
-}
