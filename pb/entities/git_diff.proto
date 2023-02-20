@@ -1,0 +1,35 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+import "entities/file.proto";
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+message GitDiff {
+    string old_commit_id = 1;
+    string new_commit_id = 2;
+    //Map from all file paths to the respective diff: if a file is renamed, both paths are mapped.
+    map<string, entities.FileInfoDiff> files = 3;
+    map<string, GitFileDiffs> diffs = 4;
+}
+
+message GitFileDiffs {
+    repeated GitDiffBlock blocks = 1;
+}
+
+message GitDiffBlock {
+    GitDiffSpan old = 1;
+    GitDiffSpan new = 2;
+    //True iff block is context about changes, i.e., did not change.
+    bool is_context = 3;
+}
+
+message GitDiffSpan {
+    int32 start = 1;
+    int32 end = 2;
+}

@@ -1,0 +1,24 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+message FileInfoDiff {
+    FileInfo old_info = 1;
+    FileInfo new_info = 2;
+    int32 num_added_lines = 3;
+    int32 num_removed_lines = 4;
+    bool is_binary = 5;
+}
+
+message FileInfo {
+    string path = 1;
+    string extension = 2;
+    string blob_id = 3;
+    int32 num_lines = 4;
+}

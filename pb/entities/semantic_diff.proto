@@ -1,0 +1,144 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+import "entities/language.proto";
+import "entities/git_diff.proto";
+import "entities/span.proto";
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+enum SortCriterium {
+    TOP_DOWN = 0;
+    BOTTOM_UP = 1;
+    START_LINE = 2;
+}
+
+enum ChangeType {
+    UNMODIFIED = 0;
+    REMOVED = 1;
+    MODIFIED = 2;
+    ADDED = 3;
+}
+
+message EnhancedDiff {
+    map<string, SymbolDiff> symbols = 1; //Map from symbol id to symbol
+    map<string, FileChanges> remainders = 2; //Map from path to file changes with remainders
+    entities.GitDiff git_diff = 3;
+    repeated string roots = 4; //Roots of the symbols tree
+}
+
+message RepoSymbol {
+    string id = 1;
+    string reference_analysis_id = 2;
+    string local_id = 3;
+}
+
+message SymbolDiff {
+    SymbolInfo old_info = 1;
+    SymbolInfo new_info = 2;
+    string type = 3;
+    AgnosticType agnostic_type = 4;
+    int32 type_rank = 5;
+    repeated SortRank ranks = 6;
+    ChangeType change_type = 7;
+    string parent_id = 8;
+    repeated string inner_symbols = 9;
+    map<string, FileChanges> definitions = 10; //File path to definitions in file
+    map<string, FileChanges> uses = 11; //File path to uses in file
+    string main_definition_path = 12;
+    repeated SymbolDocumentation code_comments = 13;
+    SymbolDocumentation signature = 14;
+}
+
+message SortRank {
+    SortCriterium criterium = 1;
+    int32 rank = 2;
+}
+
+message SymbolInfo {
+    string id = 1;
+    string name = 2;
+}
+
+message FileChanges {
+    string file_path = 1;
+    int32 main_block = 2;
+    repeated ChangesBlock changes = 3;
+    bool hidden = 4;
+    int32 rank = 5;
+    bool ignored = 6;
+}
+
+message ChangesBlock {
+    CodeChanges before = 1;
+    CodeChanges core = 2;
+    CodeChanges after = 3;
+    Container container = 5;
+    int32 previous_old_line = 6;
+    int32 previous_new_line = 7;
+    string symbol_id = 8;
+    ChangeNature change_nature = 9;
+}
+
+enum ChangeNature {
+    SYNTATIC = 0;
+    FORMATTING = 1;
+}
+
+message Container {
+    string code = 1;
+    int32 start_line = 2;
+    int32 end_line = 3;
+    bool from_new = 4;
+}
+
+message CodeChanges {
+    CodeBlock old = 1;
+    CodeBlock new = 2;
+    repeated Change changes = 3;
+    repeated ChangesBlock inner_changes = 4;
+    bool collapsed = 5;
+}
+
+message CodeBlock {
+    bytes code = 1;
+    int32 start_line = 2;
+    int32 end_line = 3;
+    repeated WordReference references = 4;
+}
+
+message Change {
+    ChangeType type = 1;
+    Lines old = 2;
+    Lines new = 3;
+    repeated InlineChanges inline_changes = 4;
+}
+
+message InlineChanges {
+    LineVersion old = 1;
+    LineVersion new = 2;
+}
+
+message LineVersion {
+    repeated WordChange words = 1;
+}
+
+message WordChange {
+    ChangeType type = 1;
+    WordSpan span = 2;
+}
+
+message Lines {
+    int32 start_line = 1;
+    int32 end_line = 2;
+}
+
+enum Direction {
+    UP = 0;
+    DOWN = 1;
+}
