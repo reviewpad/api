@@ -1,0 +1,28 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package services;
+
+import "entities/language.proto";
+import "entities/semantic_diff.proto";
+import "entities/git_diff.proto";
+
+option go_package = "github.com/reviewpad/api/go/services";
+
+service Diff {
+    rpc EnhancedDiff(EnhancedDiffRequest) returns (EnhancedDiffReply) {}
+}
+
+message EnhancedDiffRequest {
+    entities.Symbols old = 1;
+    entities.Symbols new = 2;
+    entities.GitDiff raw_diff = 3;
+    string repo_uri = 4;
+}
+
+message EnhancedDiffReply {
+    entities.EnhancedDiff diff = 1;
+}
