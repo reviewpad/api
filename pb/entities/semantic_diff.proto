@@ -7,7 +7,6 @@ syntax = "proto3";
 package entities;
 
 import "entities/language.proto";
-import "entities/git_diff.proto";
 import "entities/span.proto";
 
 option go_package = "github.com/reviewpad/api/go/entities";
@@ -23,19 +22,6 @@ enum ChangeType {
     REMOVED = 1;
     MODIFIED = 2;
     ADDED = 3;
-}
-
-message EnhancedDiff {
-    map<string, SymbolDiff> symbols = 1; //Map from symbol id to symbol
-    map<string, FileChanges> remainders = 2; //Map from path to file changes with remainders
-    entities.GitDiff git_diff = 3;
-    repeated string roots = 4; //Roots of the symbols tree
-}
-
-message RepoSymbol {
-    string id = 1;
-    string reference_analysis_id = 2;
-    string local_id = 3;
 }
 
 message SymbolDiff {

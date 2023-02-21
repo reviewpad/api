@@ -13,16 +13,17 @@ import "entities/git_diff.proto";
 option go_package = "github.com/reviewpad/api/go/services";
 
 service Diff {
-    rpc EnhancedDiff(EnhancedDiffRequest) returns (EnhancedDiffReply) {}
+    rpc GetDefinedSymbolsDiff(GetDefinedSymbolsDiffRequest) returns (GetDefinedSymbolsDiffReply) {}
 }
 
-message EnhancedDiffRequest {
-    entities.Symbols old = 1;
-    entities.Symbols new = 2;
-    entities.GitDiff raw_diff = 3;
-    string repo_uri = 4;
+message GetDefinedSymbolsDiffRequest {
+    string repo_uri = 1;
+    entities.Symbols old = 2;
+    entities.Symbols new = 3;
+    entities.GitDiff git_diff = 4;
 }
 
-message EnhancedDiffReply {
-    entities.EnhancedDiff diff = 1;
+message GetDefinedSymbolsDiffReply {
+    map<string, entities.SymbolDiff> symbols = 1; //Map from symbol id to symbol
+    repeated string roots = 2; //Roots of the symbol tree
 }
