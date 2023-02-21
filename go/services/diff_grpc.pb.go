@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DiffClient interface {
-	EnhancedDiff(ctx context.Context, in *EnhancedDiffRequest, opts ...grpc.CallOption) (*EnhancedDiffReply, error)
+	GetDefinedSymbolsDiff(ctx context.Context, in *GetDefinedSymbolsDiffRequest, opts ...grpc.CallOption) (*GetDefinedSymbolsDiffReply, error)
 }
 
 type diffClient struct {
@@ -29,9 +29,9 @@ func NewDiffClient(cc grpc.ClientConnInterface) DiffClient {
 	return &diffClient{cc}
 }
 
-func (c *diffClient) EnhancedDiff(ctx context.Context, in *EnhancedDiffRequest, opts ...grpc.CallOption) (*EnhancedDiffReply, error) {
-	out := new(EnhancedDiffReply)
-	err := c.cc.Invoke(ctx, "/services.Diff/EnhancedDiff", in, out, opts...)
+func (c *diffClient) GetDefinedSymbolsDiff(ctx context.Context, in *GetDefinedSymbolsDiffRequest, opts ...grpc.CallOption) (*GetDefinedSymbolsDiffReply, error) {
+	out := new(GetDefinedSymbolsDiffReply)
+	err := c.cc.Invoke(ctx, "/services.Diff/GetDefinedSymbolsDiff", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *diffClient) EnhancedDiff(ctx context.Context, in *EnhancedDiffRequest, 
 // All implementations must embed UnimplementedDiffServer
 // for forward compatibility
 type DiffServer interface {
-	EnhancedDiff(context.Context, *EnhancedDiffRequest) (*EnhancedDiffReply, error)
+	GetDefinedSymbolsDiff(context.Context, *GetDefinedSymbolsDiffRequest) (*GetDefinedSymbolsDiffReply, error)
 	mustEmbedUnimplementedDiffServer()
 }
 
@@ -50,8 +50,8 @@ type DiffServer interface {
 type UnimplementedDiffServer struct {
 }
 
-func (UnimplementedDiffServer) EnhancedDiff(context.Context, *EnhancedDiffRequest) (*EnhancedDiffReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EnhancedDiff not implemented")
+func (UnimplementedDiffServer) GetDefinedSymbolsDiff(context.Context, *GetDefinedSymbolsDiffRequest) (*GetDefinedSymbolsDiffReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefinedSymbolsDiff not implemented")
 }
 func (UnimplementedDiffServer) mustEmbedUnimplementedDiffServer() {}
 
@@ -66,20 +66,20 @@ func RegisterDiffServer(s grpc.ServiceRegistrar, srv DiffServer) {
 	s.RegisterService(&Diff_ServiceDesc, srv)
 }
 
-func _Diff_EnhancedDiff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EnhancedDiffRequest)
+func _Diff_GetDefinedSymbolsDiff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDefinedSymbolsDiffRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiffServer).EnhancedDiff(ctx, in)
+		return srv.(DiffServer).GetDefinedSymbolsDiff(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/services.Diff/EnhancedDiff",
+		FullMethod: "/services.Diff/GetDefinedSymbolsDiff",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiffServer).EnhancedDiff(ctx, req.(*EnhancedDiffRequest))
+		return srv.(DiffServer).GetDefinedSymbolsDiff(ctx, req.(*GetDefinedSymbolsDiffRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,8 +92,8 @@ var Diff_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DiffServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "EnhancedDiff",
-			Handler:    _Diff_EnhancedDiff_Handler,
+			MethodName: "GetDefinedSymbolsDiff",
+			Handler:    _Diff_GetDefinedSymbolsDiff_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
