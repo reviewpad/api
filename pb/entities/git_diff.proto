@@ -33,3 +33,24 @@ message GitDiffSpan {
     int32 start = 1;
     int32 end = 2;
 }
+
+message StaticDiff {
+    string old_commit_id = 1;
+    string new_commit_id = 2;
+    //Map from all file paths to the respective diff: if a file is renamed, both paths are mapped.
+    map<string, entities.FileInfoDiff> files = 3;
+    map<string, StaticFileDiffs> diffs = 4;
+}
+
+message StaticFileDiffs {
+    repeated StaticDiffBlock blocks = 1;
+}
+
+message StaticDiffBlock {
+    GitDiffSpan old = 1;
+    GitDiffSpan new = 2;
+    string old_line = 3;
+    string new_line = 4;
+    //True iff block is context about changes, i.e., did not change.
+    bool is_context = 5;
+}

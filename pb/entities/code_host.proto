@@ -1,0 +1,18 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+enum Host {
+    GITHUB = 0;
+    GITLAB = 1;
+    GITHUB_ENTERPRISE = 2;
+    GITLAB_ENTERPRISE = 3;
+    BITBUCKET_SERVER = 4;
+    BITBUCKET = 5;
+}

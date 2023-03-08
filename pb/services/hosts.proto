@@ -1,0 +1,32 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package services;
+
+import "entities/code_host.proto";
+import "entities/comments.proto";
+
+option go_package = "github.com/reviewpad/api/go/services";
+
+service Hosts {
+  // Comments
+  rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
+}
+
+message PostGeneralCommentRequest {
+  entities.Host host = 1;
+  string host_uri = 2;
+  string slug = 3;
+  string external_repo_id = 4;
+  int32 review_number = 5;
+  string external_review_id = 6;
+  string access_token = 7;
+  entities.ReviewComment comment = 8;
+}
+
+message PostGeneralCommentReply {
+  entities.ReviewComment comment = 1;
+}
