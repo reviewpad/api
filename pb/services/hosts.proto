@@ -30,3 +30,22 @@ message PostGeneralCommentRequest {
 message PostGeneralCommentReply {
   entities.ReviewComment comment = 1;
 }
+
+// TODO: Remove this from the pb definitions
+message GetApiDistributionRequest {
+  entities.Host host = 1;
+  string host_uri = 2;
+  string access_token = 3;
+}
+
+message ApiRequestDistribution {
+  int64 total = 1;
+  float fraction = 2;
+  int64 total_cost = 3;
+}
+
+message GetApiDistributionReply {
+  int32 total = 1;
+  map<string, ApiRequestDistribution> distribution = 2;
+  int32 total_cost = 3;
+}
