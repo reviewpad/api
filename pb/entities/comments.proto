@@ -73,7 +73,6 @@ message ReviewCommentLocation {
   int32 old_line = 6;
 }
 
-
 message ReviewFileComments {
   repeated ReviewComment comments = 1;
 }
