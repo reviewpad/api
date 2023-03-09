@@ -6,6 +6,8 @@ syntax = "proto3";
 
 package services;
 
+import "entities/target_entity.proto";
+
 option go_package = "github.com/reviewpad/api/go/services";
 
 service Robin {
@@ -14,7 +16,8 @@ service Robin {
 
 message PromptRequest {
     string token = 1;
-    string prompt = 2;
+    entities.TargetEntity target = 2;
+    string prompt = 3;
 }
 
 message PromptReply {
