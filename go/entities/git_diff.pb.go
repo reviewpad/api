@@ -262,6 +262,205 @@ func (x *GitDiffSpan) GetEnd() int32 {
 	return 0
 }
 
+type StaticDiff struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OldCommitId string `protobuf:"bytes,1,opt,name=old_commit_id,json=oldCommitId,proto3" json:"old_commit_id,omitempty"`
+	NewCommitId string `protobuf:"bytes,2,opt,name=new_commit_id,json=newCommitId,proto3" json:"new_commit_id,omitempty"`
+	//Map from all file paths to the respective diff: if a file is renamed, both paths are mapped.
+	Files map[string]*FileInfoDiff    `protobuf:"bytes,3,rep,name=files,proto3" json:"files,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Diffs map[string]*StaticFileDiffs `protobuf:"bytes,4,rep,name=diffs,proto3" json:"diffs,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *StaticDiff) Reset() {
+	*x = StaticDiff{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_entities_git_diff_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StaticDiff) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StaticDiff) ProtoMessage() {}
+
+func (x *StaticDiff) ProtoReflect() protoreflect.Message {
+	mi := &file_entities_git_diff_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StaticDiff.ProtoReflect.Descriptor instead.
+func (*StaticDiff) Descriptor() ([]byte, []int) {
+	return file_entities_git_diff_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *StaticDiff) GetOldCommitId() string {
+	if x != nil {
+		return x.OldCommitId
+	}
+	return ""
+}
+
+func (x *StaticDiff) GetNewCommitId() string {
+	if x != nil {
+		return x.NewCommitId
+	}
+	return ""
+}
+
+func (x *StaticDiff) GetFiles() map[string]*FileInfoDiff {
+	if x != nil {
+		return x.Files
+	}
+	return nil
+}
+
+func (x *StaticDiff) GetDiffs() map[string]*StaticFileDiffs {
+	if x != nil {
+		return x.Diffs
+	}
+	return nil
+}
+
+type StaticFileDiffs struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Blocks []*StaticDiffBlock `protobuf:"bytes,1,rep,name=blocks,proto3" json:"blocks,omitempty"`
+}
+
+func (x *StaticFileDiffs) Reset() {
+	*x = StaticFileDiffs{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_entities_git_diff_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StaticFileDiffs) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StaticFileDiffs) ProtoMessage() {}
+
+func (x *StaticFileDiffs) ProtoReflect() protoreflect.Message {
+	mi := &file_entities_git_diff_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StaticFileDiffs.ProtoReflect.Descriptor instead.
+func (*StaticFileDiffs) Descriptor() ([]byte, []int) {
+	return file_entities_git_diff_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *StaticFileDiffs) GetBlocks() []*StaticDiffBlock {
+	if x != nil {
+		return x.Blocks
+	}
+	return nil
+}
+
+type StaticDiffBlock struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Old     *GitDiffSpan `protobuf:"bytes,1,opt,name=old,proto3" json:"old,omitempty"`
+	New     *GitDiffSpan `protobuf:"bytes,2,opt,name=new,proto3" json:"new,omitempty"`
+	OldLine string       `protobuf:"bytes,3,opt,name=old_line,json=oldLine,proto3" json:"old_line,omitempty"`
+	NewLine string       `protobuf:"bytes,4,opt,name=new_line,json=newLine,proto3" json:"new_line,omitempty"`
+	//True iff block is context about changes, i.e., did not change.
+	IsContext bool `protobuf:"varint,5,opt,name=is_context,json=isContext,proto3" json:"is_context,omitempty"`
+}
+
+func (x *StaticDiffBlock) Reset() {
+	*x = StaticDiffBlock{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_entities_git_diff_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StaticDiffBlock) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StaticDiffBlock) ProtoMessage() {}
+
+func (x *StaticDiffBlock) ProtoReflect() protoreflect.Message {
+	mi := &file_entities_git_diff_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StaticDiffBlock.ProtoReflect.Descriptor instead.
+func (*StaticDiffBlock) Descriptor() ([]byte, []int) {
+	return file_entities_git_diff_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *StaticDiffBlock) GetOld() *GitDiffSpan {
+	if x != nil {
+		return x.Old
+	}
+	return nil
+}
+
+func (x *StaticDiffBlock) GetNew() *GitDiffSpan {
+	if x != nil {
+		return x.New
+	}
+	return nil
+}
+
+func (x *StaticDiffBlock) GetOldLine() string {
+	if x != nil {
+		return x.OldLine
+	}
+	return ""
+}
+
+func (x *StaticDiffBlock) GetNewLine() string {
+	if x != nil {
+		return x.NewLine
+	}
+	return ""
+}
+
+func (x *StaticDiffBlock) GetIsContext() bool {
+	if x != nil {
+		return x.IsContext
+	}
+	return false
+}
+
 var File_entities_git_diff_proto protoreflect.FileDescriptor
 
 var file_entities_git_diff_proto_rawDesc = []byte{
@@ -306,9 +505,48 @@ var file_entities_git_diff_proto_rawDesc = []byte{
 	0x44, 0x69, 0x66, 0x66, 0x53, 0x70, 0x61, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x72,
 	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x73, 0x74, 0x61, 0x72, 0x74, 0x12, 0x10,
 	0x0a, 0x03, 0x65, 0x6e, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x65, 0x6e, 0x64,
-	0x42, 0x26, 0x5a, 0x24, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72,
-	0x65, 0x76, 0x69, 0x65, 0x77, 0x70, 0x61, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x6f, 0x2f,
-	0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0xe9, 0x02, 0x0a, 0x0a, 0x53, 0x74, 0x61, 0x74, 0x69, 0x63, 0x44, 0x69, 0x66, 0x66, 0x12,
+	0x22, 0x0a, 0x0d, 0x6f, 0x6c, 0x64, 0x5f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x6f, 0x6c, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x69,
+	0x74, 0x49, 0x64, 0x12, 0x22, 0x0a, 0x0d, 0x6e, 0x65, 0x77, 0x5f, 0x63, 0x6f, 0x6d, 0x6d, 0x69,
+	0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x6e, 0x65, 0x77, 0x43,
+	0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x49, 0x64, 0x12, 0x35, 0x0a, 0x05, 0x66, 0x69, 0x6c, 0x65, 0x73,
+	0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65,
+	0x73, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x69, 0x63, 0x44, 0x69, 0x66, 0x66, 0x2e, 0x46, 0x69, 0x6c,
+	0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x12, 0x35,
+	0x0a, 0x05, 0x64, 0x69, 0x66, 0x66, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1f, 0x2e,
+	0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x69, 0x63, 0x44,
+	0x69, 0x66, 0x66, 0x2e, 0x44, 0x69, 0x66, 0x66, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05,
+	0x64, 0x69, 0x66, 0x66, 0x73, 0x1a, 0x50, 0x0a, 0x0a, 0x46, 0x69, 0x6c, 0x65, 0x73, 0x45, 0x6e,
+	0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x2c, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e,
+	0x46, 0x69, 0x6c, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x44, 0x69, 0x66, 0x66, 0x52, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x1a, 0x53, 0x0a, 0x0a, 0x44, 0x69, 0x66, 0x66, 0x73,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x2f, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65,
+	0x73, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x69, 0x63, 0x46, 0x69, 0x6c, 0x65, 0x44, 0x69, 0x66, 0x66,
+	0x73, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x44, 0x0a, 0x0f,
+	0x53, 0x74, 0x61, 0x74, 0x69, 0x63, 0x46, 0x69, 0x6c, 0x65, 0x44, 0x69, 0x66, 0x66, 0x73, 0x12,
+	0x31, 0x0a, 0x06, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x69,
+	0x63, 0x44, 0x69, 0x66, 0x66, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x52, 0x06, 0x62, 0x6c, 0x6f, 0x63,
+	0x6b, 0x73, 0x22, 0xb8, 0x01, 0x0a, 0x0f, 0x53, 0x74, 0x61, 0x74, 0x69, 0x63, 0x44, 0x69, 0x66,
+	0x66, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x12, 0x27, 0x0a, 0x03, 0x6f, 0x6c, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x47,
+	0x69, 0x74, 0x44, 0x69, 0x66, 0x66, 0x53, 0x70, 0x61, 0x6e, 0x52, 0x03, 0x6f, 0x6c, 0x64, 0x12,
+	0x27, 0x0a, 0x03, 0x6e, 0x65, 0x77, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x65,
+	0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x47, 0x69, 0x74, 0x44, 0x69, 0x66, 0x66, 0x53,
+	0x70, 0x61, 0x6e, 0x52, 0x03, 0x6e, 0x65, 0x77, 0x12, 0x19, 0x0a, 0x08, 0x6f, 0x6c, 0x64, 0x5f,
+	0x6c, 0x69, 0x6e, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x6c, 0x64, 0x4c,
+	0x69, 0x6e, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x6e, 0x65, 0x77, 0x5f, 0x6c, 0x69, 0x6e, 0x65, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6e, 0x65, 0x77, 0x4c, 0x69, 0x6e, 0x65, 0x12, 0x1d,
+	0x0a, 0x0a, 0x69, 0x73, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x42, 0x26, 0x5a,
+	0x24, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x65, 0x76, 0x69,
+	0x65, 0x77, 0x70, 0x61, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x6f, 0x2f, 0x65, 0x6e, 0x74,
+	0x69, 0x74, 0x69, 0x65, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -323,29 +561,41 @@ func file_entities_git_diff_proto_rawDescGZIP() []byte {
 	return file_entities_git_diff_proto_rawDescData
 }
 
-var file_entities_git_diff_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_entities_git_diff_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_entities_git_diff_proto_goTypes = []interface{}{
-	(*GitDiff)(nil),      // 0: entities.GitDiff
-	(*GitFileDiffs)(nil), // 1: entities.GitFileDiffs
-	(*GitDiffBlock)(nil), // 2: entities.GitDiffBlock
-	(*GitDiffSpan)(nil),  // 3: entities.GitDiffSpan
-	nil,                  // 4: entities.GitDiff.FilesEntry
-	nil,                  // 5: entities.GitDiff.DiffsEntry
-	(*FileInfoDiff)(nil), // 6: entities.FileInfoDiff
+	(*GitDiff)(nil),         // 0: entities.GitDiff
+	(*GitFileDiffs)(nil),    // 1: entities.GitFileDiffs
+	(*GitDiffBlock)(nil),    // 2: entities.GitDiffBlock
+	(*GitDiffSpan)(nil),     // 3: entities.GitDiffSpan
+	(*StaticDiff)(nil),      // 4: entities.StaticDiff
+	(*StaticFileDiffs)(nil), // 5: entities.StaticFileDiffs
+	(*StaticDiffBlock)(nil), // 6: entities.StaticDiffBlock
+	nil,                     // 7: entities.GitDiff.FilesEntry
+	nil,                     // 8: entities.GitDiff.DiffsEntry
+	nil,                     // 9: entities.StaticDiff.FilesEntry
+	nil,                     // 10: entities.StaticDiff.DiffsEntry
+	(*FileInfoDiff)(nil),    // 11: entities.FileInfoDiff
 }
 var file_entities_git_diff_proto_depIdxs = []int32{
-	4, // 0: entities.GitDiff.files:type_name -> entities.GitDiff.FilesEntry
-	5, // 1: entities.GitDiff.diffs:type_name -> entities.GitDiff.DiffsEntry
-	2, // 2: entities.GitFileDiffs.blocks:type_name -> entities.GitDiffBlock
-	3, // 3: entities.GitDiffBlock.old:type_name -> entities.GitDiffSpan
-	3, // 4: entities.GitDiffBlock.new:type_name -> entities.GitDiffSpan
-	6, // 5: entities.GitDiff.FilesEntry.value:type_name -> entities.FileInfoDiff
-	1, // 6: entities.GitDiff.DiffsEntry.value:type_name -> entities.GitFileDiffs
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	7,  // 0: entities.GitDiff.files:type_name -> entities.GitDiff.FilesEntry
+	8,  // 1: entities.GitDiff.diffs:type_name -> entities.GitDiff.DiffsEntry
+	2,  // 2: entities.GitFileDiffs.blocks:type_name -> entities.GitDiffBlock
+	3,  // 3: entities.GitDiffBlock.old:type_name -> entities.GitDiffSpan
+	3,  // 4: entities.GitDiffBlock.new:type_name -> entities.GitDiffSpan
+	9,  // 5: entities.StaticDiff.files:type_name -> entities.StaticDiff.FilesEntry
+	10, // 6: entities.StaticDiff.diffs:type_name -> entities.StaticDiff.DiffsEntry
+	6,  // 7: entities.StaticFileDiffs.blocks:type_name -> entities.StaticDiffBlock
+	3,  // 8: entities.StaticDiffBlock.old:type_name -> entities.GitDiffSpan
+	3,  // 9: entities.StaticDiffBlock.new:type_name -> entities.GitDiffSpan
+	11, // 10: entities.GitDiff.FilesEntry.value:type_name -> entities.FileInfoDiff
+	1,  // 11: entities.GitDiff.DiffsEntry.value:type_name -> entities.GitFileDiffs
+	11, // 12: entities.StaticDiff.FilesEntry.value:type_name -> entities.FileInfoDiff
+	5,  // 13: entities.StaticDiff.DiffsEntry.value:type_name -> entities.StaticFileDiffs
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_entities_git_diff_proto_init() }
@@ -403,6 +653,42 @@ func file_entities_git_diff_proto_init() {
 				return nil
 			}
 		}
+		file_entities_git_diff_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StaticDiff); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_entities_git_diff_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StaticFileDiffs); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_entities_git_diff_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StaticDiffBlock); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -410,7 +696,7 @@ func file_entities_git_diff_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_entities_git_diff_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

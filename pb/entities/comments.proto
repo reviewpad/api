@@ -1,0 +1,87 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+import "entities/external_user.proto";
+import "entities/file.proto";
+import "entities/git_diff.proto";
+import "entities/semantic_diff.proto";
+
+message ReviewComment {
+  string id = 1;
+  // In GitLab / Bitbucket, you can have threads in the general comments
+  string reply_to = 2;
+  entities.ExternalUser author = 3;
+  CommentSeverity severity = 4;
+  string body = 5;
+  string code_review_id = 6;
+  string user_id = 7;
+  string user_review_id = 8;
+  ReviewCommentLocation location = 9;
+  optional bool resolved = 10;
+  CommentType type = 11;
+  bool is_outdated = 12;
+  ChangesBlock context = 13;
+  FileInfoDiff file_info_diff = 14;
+  CommentLineType line_type = 15;
+  // Original information
+  ReviewCommentLocation original_location = 16;
+  string external_id = 17;
+  string external_node_id = 18;
+  string external_reply_to = 19;
+  string external_reply_to_node = 20;
+  string external_discussion_id = 21;
+  int64 external_created_at = 22;
+  int64 external_updated_at = 23;
+  string external_review_id = 24;
+  int64 created_at = 25;
+  int64 updated_at = 26;
+  entities.StaticFileDiffs diff = 27;
+  repeated string related_comments_id = 28;
+}
+
+enum CommentSeverity {
+  LOW = 0;
+  MEDIUM = 1;
+  HIGH = 2;
+}
+
+enum CommentType {
+  UNKNOWN = 0;
+  DIFF = 1;
+  GENERAL = 2;
+}
+
+enum CommentLineType {
+  LINE_ADDED = 0;
+  LINE_REMOVED = 1;
+  CONTEXT_LINE = 2;
+}
+
+message ReviewCommentLocation {
+  string new_path = 1;
+  string old_path = 2;
+  string base_commit_id = 3;
+  string head_commit_id = 4;
+  int32 new_line = 5;
+  int32 old_line = 6;
+}
+
+message ReviewFileComments {
+  repeated ReviewComment comments = 1;
+}
+
+message ReviewDiscussionCountBySeverity {
+  map<string, ReviewDiscussionCount> by_severity = 1;
+}
+
+message ReviewDiscussionCount {
+  int32 total = 1;
+  int32 resolved = 2;
+}
