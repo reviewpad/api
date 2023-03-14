@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RobinClient interface {
 	Prompt(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*PromptReply, error)
+	Summarize(ctx context.Context, in *SummarizeRequest, opts ...grpc.CallOption) (*SummarizeReply, error)
 }
 
 type robinClient struct {
@@ -38,11 +39,21 @@ func (c *robinClient) Prompt(ctx context.Context, in *PromptRequest, opts ...grp
 	return out, nil
 }
 
+func (c *robinClient) Summarize(ctx context.Context, in *SummarizeRequest, opts ...grpc.CallOption) (*SummarizeReply, error) {
+	out := new(SummarizeReply)
+	err := c.cc.Invoke(ctx, "/services.Robin/Summarize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RobinServer is the server API for Robin service.
 // All implementations must embed UnimplementedRobinServer
 // for forward compatibility
 type RobinServer interface {
 	Prompt(context.Context, *PromptRequest) (*PromptReply, error)
+	Summarize(context.Context, *SummarizeRequest) (*SummarizeReply, error)
 	mustEmbedUnimplementedRobinServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedRobinServer struct {
 
 func (UnimplementedRobinServer) Prompt(context.Context, *PromptRequest) (*PromptReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Prompt not implemented")
+}
+func (UnimplementedRobinServer) Summarize(context.Context, *SummarizeRequest) (*SummarizeReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Summarize not implemented")
 }
 func (UnimplementedRobinServer) mustEmbedUnimplementedRobinServer() {}
 
@@ -84,6 +98,24 @@ func _Robin_Prompt_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Robin_Summarize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SummarizeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RobinServer).Summarize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Robin/Summarize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RobinServer).Summarize(ctx, req.(*SummarizeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Robin_ServiceDesc is the grpc.ServiceDesc for Robin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var Robin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Prompt",
 			Handler:    _Robin_Prompt_Handler,
+		},
+		{
+			MethodName: "Summarize",
+			Handler:    _Robin_Summarize_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
