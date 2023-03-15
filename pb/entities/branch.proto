@@ -12,8 +12,8 @@ import "entities/external_user.proto";
 option go_package = "github.com/reviewpad/api/go/entities";
 
 message Branch {
-    string label = 1;
+    string name = 1;
     string oid = 2;
-    Repository repo = 3;
-    ExternalUser author = 4;
+    entities.Repository repo = 3;
+    entities.ExternalUser author = 4;
 }
