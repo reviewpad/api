@@ -77,18 +77,18 @@ message ExternalCodeReview {
   map<string, Team> team_reviewers = 20;
   int64 comments_count = 21;
   int64 commits_count = 22;
-  repeated ExternalUser assignees = 23;
+  repeated entities.ExternalUser assignees = 23;
   bool merged = 24;
   int64 closed_at = 25;
   bool rebaseable = 26;
   string url = 27;
   int64 merged_at = 28;
-  Milestone milestone = 29;
+  entities.Milestone milestone = 29;
   int64 Additions = 30;
   int64 Deletions = 31;
   int64 ChangedFilesCount = 32;
-  Branch base = 33;
-  Branch head = 34;
+  entities.Branch base = 33;
+  entities.Branch head = 34;
 }
 
 message Reviewer {
