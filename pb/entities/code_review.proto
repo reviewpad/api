@@ -1,0 +1,132 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package entities;
+
+option go_package = "github.com/reviewpad/api/go/entities";
+
+import "entities/external_user.proto";
+import "entities/label.proto";
+import "entities/teams.proto";
+import "entities/milestone.proto";
+import "entities/branch.proto";
+
+enum CodeReviewStatus {
+  OPEN = 0;
+  CLOSED = 1;
+  MERGED = 2;
+}
+
+enum ReviewEvent {
+  APPROVE = 0;
+  REQUEST_CHANGES = 1;
+  COMMENT = 2;
+  UNAPPROVE = 3;
+}
+
+enum ReviewerStatus {
+  NEUTRAL = 0;
+  BLOCKED = 1;
+  APPROVED = 2;
+}
+
+message ExternalUserReview {
+  string base_commit_id = 1;
+  string head_commit_id = 2;
+  UserReviewStatus status = 3;
+  string body = 4;
+  int64 created_at = 5;
+  int64 updated_at = 6;
+  string id = 7;
+}
+
+message ExternalUserReviews {
+  entities.ExternalUser participant = 1;
+  repeated ExternalUserReview reviews = 2;
+}
+
+message ExternalReviewer {
+  entities.ExternalUser reviewer = 1;
+  ReviewerStatus status = 2;
+  bool action_required = 3;
+}
+
+message ExternalCodeReview {
+  int32 number = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  string repo_id = 4;
+  entities.ExternalUser author = 5;
+  string title = 6;
+  string description = 7;
+  string head_branch = 8;
+  string base_branch = 9;
+  CodeReviewStatus status = 10;
+  map<string, ExternalReviewer> reviewers = 11;
+  map<string, ExternalUserReviews> user_to_reviews = 12;
+  optional bool is_draft = 13;
+  string base_commit = 14;
+  string head_commit = 15;
+  bool can_merge = 16;
+  string node_id = 17;
+  repeated entities.Label labels = 18;
+  string merge_commit = 19; //Merge commit in master if it exists
+  map<string, Team> team_reviewers = 20;
+  int64 comments_count = 21;
+  int64 commits_count = 22;
+  repeated ExternalUser assignees = 23;
+  bool merged = 24;
+  int64 closed_at = 25;
+  bool rebaseable = 26;
+  string url = 27;
+  int64 merged_at = 28;
+  Milestone milestone = 29;
+  int64 Additions = 30;
+  int64 Deletions = 31;
+  int64 ChangedFilesCount = 32;
+  Branch base = 33;
+  Branch head = 34;
+}
+
+message Reviewer {
+  string id = 1;
+  string code_review_id = 2;
+  string user_id = 3;
+  entities.ExternalUser external_user = 4;
+  ReviewerStatus status = 5;
+  bool action_required = 6;
+  int64 last_reviewed_at = 7;
+}
+
+enum UserReviewStatus {
+  USER_REQUESTED_CHANGES = 0;
+  USER_APPROVED = 1;
+  USER_COMMENTED = 2;
+  PENDING = 3;
+  DISMISSED = 4;
+}
+
+message UserReview {
+  string id = 1;
+  string reviewer_id = 2;
+  string base_commit_id = 3;
+  string head_commit_id = 4;
+  string body = 5;
+  UserReviewStatus status = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+  string external_id = 9;
+}
+
+message ReviewProgress {
+  string id = 1;
+  string code_review_id = 2;
+  string user_id = 3;
+  string base_commit_id = 4;
+  string head_commit_id = 5;
+  repeated string reviewed_files = 6;
+  repeated string modified_since_reviewed = 7;
+}
