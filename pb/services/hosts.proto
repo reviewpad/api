@@ -8,12 +8,14 @@ package services;
 
 import "entities/code_host.proto";
 import "entities/comments.proto";
+import "entities/code_review.proto";
 
 option go_package = "github.com/reviewpad/api/go/services";
 
 service Hosts {
   // Comments
   rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
+  rpc GetExternalCodeReview(GetExternalCodeReviewRequest) returns (GetExternalCodeReviewReply) {}
 }
 
 message PostGeneralCommentRequest {
@@ -48,4 +50,17 @@ message GetApiDistributionReply {
   int32 total = 1;
   map<string, ApiRequestDistribution> distribution = 2;
   int32 total_cost = 3;
+}
+
+message GetExternalCodeReviewRequest {
+  string slug = 1;
+  string external_repo_id = 2;
+  entities.Host host = 3;
+  string host_uri = 4;
+  int32 review_number = 5;
+  string access_token = 6;
+}
+
+message GetExternalCodeReviewReply {
+  entities.ExternalCodeReview code_review = 1;
 }
