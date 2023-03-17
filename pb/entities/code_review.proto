@@ -89,6 +89,7 @@ message ExternalCodeReview {
   int64 ChangedFilesCount = 32;
   entities.Branch base = 33;
   entities.Branch head = 34;
+  entities.RequestedReviewers requested_reviewers = 35;
 }
 
 message Reviewer {
@@ -129,4 +130,9 @@ message ReviewProgress {
   string head_commit_id = 5;
   repeated string reviewed_files = 6;
   repeated string modified_since_reviewed = 7;
+}
+
+message RequestedReviewers {
+  repeated entities.ExternalReviewer users = 1;
+  repeated entities.Team teams = 2;
 }
