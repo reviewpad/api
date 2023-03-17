@@ -84,9 +84,9 @@ message ExternalCodeReview {
   string url = 27;
   int64 merged_at = 28;
   entities.Milestone milestone = 29;
-  int64 Additions = 30;
-  int64 Deletions = 31;
-  int64 ChangedFilesCount = 32;
+  int64 additions = 30;
+  int64 deletions = 31;
+  int64 changed_files_count = 32;
   entities.Branch base = 33;
   entities.Branch head = 34;
   entities.RequestedReviewers requested_reviewers = 35;
