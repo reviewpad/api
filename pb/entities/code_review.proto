@@ -133,6 +133,6 @@ message ReviewProgress {
 }
 
 message RequestedReviewers {
-  repeated entities.ExternalReviewer users = 1;
+  repeated entities.ExternalUser users = 1;
   repeated entities.Team teams = 2;
 }
