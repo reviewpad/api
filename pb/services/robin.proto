@@ -20,6 +20,7 @@ message PromptRequest {
     entities.TargetEntity target = 2;
     string prompt = 3;
     bool act = 4;
+    string model = 5;
 }
 
 message PromptReply {
@@ -31,6 +32,7 @@ message SummarizeRequest {
     entities.TargetEntity target = 2;
     bool act = 3;
     bool extended = 4;
+    string model = 5;
 }
 
 message SummarizeReply {
