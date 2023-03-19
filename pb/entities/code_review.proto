@@ -67,7 +67,7 @@ message ExternalCodeReview {
   CodeReviewStatus status = 10;
   map<string, ExternalReviewer> reviewers = 11;
   map<string, ExternalUserReviews> user_to_reviews = 12;
-  optional bool is_draft = 13;
+  bool is_draft = 13;
   string base_commit = 14;
   string head_commit = 15;
   bool can_merge = 16;
