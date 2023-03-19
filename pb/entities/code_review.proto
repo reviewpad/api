@@ -13,6 +13,7 @@ import "entities/label.proto";
 import "entities/teams.proto";
 import "entities/milestone.proto";
 import "entities/branch.proto";
+import "google/protobuf/timestamp.proto";
 
 enum CodeReviewStatus {
   OPEN = 0;
@@ -78,10 +79,10 @@ message ExternalCodeReview {
   int64 commits_count = 21;
   repeated entities.ExternalUser assignees = 22;
   bool merged = 23;
-  int64 closed_at = 24;
+  google.protobuf.Timestamp closed_at = 24;
   bool rebaseable = 25;
   string url = 26;
-  int64 merged_at = 27;
+  google.protobuf.Timestamp merged_at = 27;
   entities.Milestone milestone = 28;
   int64 additions = 29;
   int64 deletions = 30;
