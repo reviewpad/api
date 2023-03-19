@@ -74,22 +74,21 @@ message ExternalCodeReview {
   string node_id = 17;
   repeated entities.Label labels = 18;
   string merge_commit = 19; //Merge commit in master if it exists
-  map<string, Team> team_reviewers = 20;
-  int64 comments_count = 21;
-  int64 commits_count = 22;
-  repeated entities.ExternalUser assignees = 23;
-  bool merged = 24;
-  int64 closed_at = 25;
-  bool rebaseable = 26;
-  string url = 27;
-  int64 merged_at = 28;
-  entities.Milestone milestone = 29;
-  int64 additions = 30;
-  int64 deletions = 31;
-  int64 changed_files_count = 32;
-  entities.Branch base = 33;
-  entities.Branch head = 34;
-  entities.RequestedReviewers requested_reviewers = 35;
+  int64 comments_count = 20;
+  int64 commits_count = 21;
+  repeated entities.ExternalUser assignees = 22;
+  bool merged = 23;
+  int64 closed_at = 24;
+  bool rebaseable = 25;
+  string url = 26;
+  int64 merged_at = 27;
+  entities.Milestone milestone = 28;
+  int64 additions = 29;
+  int64 deletions = 30;
+  int64 changed_files_count = 31;
+  entities.Branch base = 32;
+  entities.Branch head = 33;
+  entities.RequestedReviewers requested_reviewers = 34;
 }
 
 message Reviewer {
