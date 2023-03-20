@@ -32,6 +32,7 @@ tasks:
       Run with --watch or -w to watch for changes on generated files.
     cmds:
       - mockgen --build_flags=--mod=mod --destination services_mocks/semantic_service.go --package services_mocks github.com/reviewpad/api/go/services SemanticClient
+      - mockgen --build_flags=--mod=mod --destination mocks/hosts.go --package mocks github.com/reviewpad/api/go/services HostsClient
     sources:
       - ./services/*.go
 
