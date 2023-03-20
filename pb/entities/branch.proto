@@ -7,13 +7,11 @@ syntax = "proto3";
 package entities;
 
 import "entities/git_repo.proto";
-import "entities/external_user.proto";
 
 option go_package = "github.com/reviewpad/api/go/entities";
 
 message Branch {
     string name = 1;
-    string oid = 2;
+    string sha = 2;
     entities.Repository repo = 3;
-    entities.ExternalUser author = 4;
 }

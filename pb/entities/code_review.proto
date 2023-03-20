@@ -18,121 +18,39 @@ import "google/protobuf/timestamp.proto";
 enum CodeReviewStatus {
   OPEN = 0;
   CLOSED = 1;
-  MERGED = 2;
 }
 
-enum ReviewEvent {
-  APPROVE = 0;
-  REQUEST_CHANGES = 1;
-  COMMENT = 2;
-  UNAPPROVE = 3;
-}
-
-enum ReviewerStatus {
-  NEUTRAL = 0;
-  BLOCKED = 1;
-  APPROVED = 2;
-}
-
-message ExternalUserReview {
-  string base_commit_id = 1;
-  string head_commit_id = 2;
-  UserReviewStatus status = 3;
-  string body = 4;
-  int64 created_at = 5;
-  int64 updated_at = 6;
-  string id = 7;
-}
-
-message ExternalUserReviews {
-  entities.ExternalUser participant = 1;
-  repeated ExternalUserReview reviews = 2;
-}
-
-message ExternalReviewer {
-  entities.ExternalUser reviewer = 1;
-  ReviewerStatus status = 2;
-  bool action_required = 3;
-}
-
-message ExternalCodeReview {
-  int32 number = 1;
-  int64 created_at = 2;
-  int64 updated_at = 3;
-  string repo_id = 4;
-  entities.ExternalUser author = 5;
-  string title = 6;
-  string description = 7;
-  string head_branch = 8;
-  string base_branch = 9;
-  CodeReviewStatus status = 10;
-  map<string, ExternalReviewer> reviewers = 11;
-  map<string, ExternalUserReviews> user_to_reviews = 12;
-  bool is_draft = 13;
-  string base_commit = 14;
-  string head_commit = 15;
-  bool can_merge = 16;
-  string node_id = 17;
-  repeated entities.Label labels = 18;
-  string merge_commit = 19; //Merge commit in master if it exists
-  int64 comments_count = 20;
-  int64 commits_count = 21;
-  repeated entities.ExternalUser assignees = 22;
-  bool merged = 23;
-  google.protobuf.Timestamp closed_at = 24;
-  bool rebaseable = 25;
-  string url = 26;
-  google.protobuf.Timestamp merged_at = 27;
-  entities.Milestone milestone = 28;
-  int64 additions = 29;
-  int64 deletions = 30;
-  int64 changed_files_count = 31;
-  entities.Branch base = 32;
-  entities.Branch head = 33;
-  entities.RequestedReviewers requested_reviewers = 34;
-  // A JSON encoded string that represents the raw pull request data we get from the provider
-  // Usually fetched by calling the providers REST API
-  string raw = 35;
-}
-
-message Reviewer {
+message CodeReview {
+  // The unique identifier of the code review. usually the id of the object we get for the GraphQL API
   string id = 1;
-  string code_review_id = 2;
-  string user_id = 3;
-  entities.ExternalUser external_user = 4;
-  ReviewerStatus status = 5;
-  bool action_required = 6;
-  int64 last_reviewed_at = 7;
-}
-
-enum UserReviewStatus {
-  USER_REQUESTED_CHANGES = 0;
-  USER_APPROVED = 1;
-  USER_COMMENTED = 2;
-  PENDING = 3;
-  DISMISSED = 4;
-}
-
-message UserReview {
-  string id = 1;
-  string reviewer_id = 2;
-  string base_commit_id = 3;
-  string head_commit_id = 4;
-  string body = 5;
-  UserReviewStatus status = 6;
-  int64 created_at = 7;
-  int64 updated_at = 8;
-  string external_id = 9;
-}
-
-message ReviewProgress {
-  string id = 1;
-  string code_review_id = 2;
-  string user_id = 3;
-  string base_commit_id = 4;
-  string head_commit_id = 5;
-  repeated string reviewed_files = 6;
-  repeated string modified_since_reviewed = 7;
+  int64 number = 2;
+  string title = 3;
+  string description = 4;
+  CodeReviewStatus status = 5;
+  bool is_draft = 6;
+  bool is_merged = 7;
+  bool is_closed = 8;
+  bool is_rebaseable = 9;
+  int64 comments_count = 10;
+  int64 commits_count = 11;
+  int64 additions_count = 12;
+  int64 deletions_count = 13;
+  int64 changed_files_count = 14;
+  string url = 15;
+  google.protobuf.Timestamp closed_at = 16;
+  google.protobuf.Timestamp merged_at = 17;
+  google.protobuf.Timestamp created_at = 18;
+  google.protobuf.Timestamp updated_at = 19;
+  entities.Branch base = 20;
+  entities.Branch head = 21;
+  entities.ExternalUser author = 22;
+  repeated entities.ExternalUser assignees = 23;
+  repeated entities.Label labels = 24;
+  entities.Milestone milestone = 25;
+  RequestedReviewers requested_reviewers = 26;
+  // A JSON encoded presentation of the raw code review object
+  // usually the response we get from the REST API of the provider
+  string raw = 27;
 }
 
 message RequestedReviewers {

@@ -15,7 +15,7 @@ option go_package = "github.com/reviewpad/api/go/services";
 service Hosts {
   // Comments
   rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
-  rpc GetExternalCodeReview(GetExternalCodeReviewRequest) returns (GetExternalCodeReviewReply) {}
+  rpc GetCodeReview(GetCodeReviewRequest) returns (GetCodeReviewReply) {}
 }
 
 message PostGeneralCommentRequest {
@@ -52,7 +52,7 @@ message GetApiDistributionReply {
   int32 total_cost = 3;
 }
 
-message GetExternalCodeReviewRequest {
+message GetCodeReviewRequest {
   string slug = 1;
   string external_repo_id = 2;
   entities.Host host = 3;
@@ -61,6 +61,6 @@ message GetExternalCodeReviewRequest {
   string access_token = 6;
 }
 
-message GetExternalCodeReviewReply {
-  entities.ExternalCodeReview code_review = 1;
+message GetCodeReviewReply {
+  entities.CodeReview review = 1;
 }
