@@ -23,8 +23,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Hosts_PostGeneralComment_FullMethodName    = "/services.Hosts/PostGeneralComment"
-	Hosts_GetExternalCodeReview_FullMethodName = "/services.Hosts/GetExternalCodeReview"
+	Hosts_PostGeneralComment_FullMethodName = "/services.Hosts/PostGeneralComment"
+	Hosts_GetCodeReview_FullMethodName      = "/services.Hosts/GetCodeReview"
 )
 
 // HostsClient is the client API for Hosts service.
@@ -33,7 +33,7 @@ const (
 type HostsClient interface {
 	// Comments
 	PostGeneralComment(ctx context.Context, in *PostGeneralCommentRequest, opts ...grpc.CallOption) (*PostGeneralCommentReply, error)
-	GetExternalCodeReview(ctx context.Context, in *GetExternalCodeReviewRequest, opts ...grpc.CallOption) (*GetExternalCodeReviewReply, error)
+	GetCodeReview(ctx context.Context, in *GetCodeReviewRequest, opts ...grpc.CallOption) (*GetCodeReviewReply, error)
 }
 
 type hostsClient struct {
@@ -53,9 +53,9 @@ func (c *hostsClient) PostGeneralComment(ctx context.Context, in *PostGeneralCom
 	return out, nil
 }
 
-func (c *hostsClient) GetExternalCodeReview(ctx context.Context, in *GetExternalCodeReviewRequest, opts ...grpc.CallOption) (*GetExternalCodeReviewReply, error) {
-	out := new(GetExternalCodeReviewReply)
-	err := c.cc.Invoke(ctx, Hosts_GetExternalCodeReview_FullMethodName, in, out, opts...)
+func (c *hostsClient) GetCodeReview(ctx context.Context, in *GetCodeReviewRequest, opts ...grpc.CallOption) (*GetCodeReviewReply, error) {
+	out := new(GetCodeReviewReply)
+	err := c.cc.Invoke(ctx, Hosts_GetCodeReview_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (c *hostsClient) GetExternalCodeReview(ctx context.Context, in *GetExternal
 type HostsServer interface {
 	// Comments
 	PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error)
-	GetExternalCodeReview(context.Context, *GetExternalCodeReviewRequest) (*GetExternalCodeReviewReply, error)
+	GetCodeReview(context.Context, *GetCodeReviewRequest) (*GetCodeReviewReply, error)
 	mustEmbedUnimplementedHostsServer()
 }
 
@@ -79,8 +79,8 @@ type UnimplementedHostsServer struct {
 func (UnimplementedHostsServer) PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostGeneralComment not implemented")
 }
-func (UnimplementedHostsServer) GetExternalCodeReview(context.Context, *GetExternalCodeReviewRequest) (*GetExternalCodeReviewReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExternalCodeReview not implemented")
+func (UnimplementedHostsServer) GetCodeReview(context.Context, *GetCodeReviewRequest) (*GetCodeReviewReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCodeReview not implemented")
 }
 func (UnimplementedHostsServer) mustEmbedUnimplementedHostsServer() {}
 
@@ -113,20 +113,20 @@ func _Hosts_PostGeneralComment_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Hosts_GetExternalCodeReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetExternalCodeReviewRequest)
+func _Hosts_GetCodeReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCodeReviewRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HostsServer).GetExternalCodeReview(ctx, in)
+		return srv.(HostsServer).GetCodeReview(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Hosts_GetExternalCodeReview_FullMethodName,
+		FullMethod: Hosts_GetCodeReview_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HostsServer).GetExternalCodeReview(ctx, req.(*GetExternalCodeReviewRequest))
+		return srv.(HostsServer).GetCodeReview(ctx, req.(*GetCodeReviewRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -143,8 +143,8 @@ var Hosts_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Hosts_PostGeneralComment_Handler,
 		},
 		{
-			MethodName: "GetExternalCodeReview",
-			Handler:    _Hosts_GetExternalCodeReview_Handler,
+			MethodName: "GetCodeReview",
+			Handler:    _Hosts_GetCodeReview_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
