@@ -90,6 +90,9 @@ message ExternalCodeReview {
   entities.Branch base = 32;
   entities.Branch head = 33;
   entities.RequestedReviewers requested_reviewers = 34;
+  // A JSON encoded string that represents the raw pull request data we get from the provider
+  // Usually fetched by calling the providers REST API
+  string raw = 35;
 }
 
 message Reviewer {
