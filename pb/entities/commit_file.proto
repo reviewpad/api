@@ -9,6 +9,16 @@ package entities;
 option go_package = "github.com/reviewpad/api/go/entities";
 
 message CommitFile {
+    enum CommitFileStatus {
+        ADDED = 0;
+        REMOVED = 1;
+        MODIFIED = 2;
+        RENAMED = 3;
+        COPIED = 4;
+        CHANGED = 5;
+        UNCHANGED = 6;
+    }
+
     string sha = 1;
     string filename = 2;
     string previous_file_name = 3;
@@ -16,4 +26,5 @@ message CommitFile {
     int64 deletions_count = 5;
     int64 changes_count = 6;
     string patch = 7;
+    CommitFileStatus status = 8;
 }
