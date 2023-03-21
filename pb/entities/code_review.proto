@@ -14,6 +14,7 @@ import "entities/teams.proto";
 import "entities/milestone.proto";
 import "entities/branch.proto";
 import "google/protobuf/timestamp.proto";
+import "entities/commit_file.proto";
 
 enum CodeReviewStatus {
   OPEN = 0;
@@ -51,6 +52,7 @@ message CodeReview {
   // A JSON encoded presentation of the raw code review object
   // usually the response we get from the REST API of the provider
   string raw = 27;
+  repeated entities.CommitFile files = 28;
 }
 
 message RequestedReviewers {
