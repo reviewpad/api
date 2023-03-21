@@ -10,13 +10,14 @@ option go_package = "github.com/reviewpad/api/go/entities";
 
 message CommitFile {
     enum CommitFileStatus {
-        ADDED = 0;
-        REMOVED = 1;
-        MODIFIED = 2;
-        RENAMED = 3;
-        COPIED = 4;
-        CHANGED = 5;
-        UNCHANGED = 6;
+        UNKNOWN = 0;
+        ADDED = 1;
+        REMOVED = 2;
+        MODIFIED = 3;
+        RENAMED = 4;
+        COPIED = 5;
+        CHANGED = 6;
+        UNCHANGED = 7;
     }
 
     string sha = 1;
