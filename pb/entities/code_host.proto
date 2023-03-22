@@ -4,9 +4,9 @@
 
 syntax = "proto3";
 
-package codehost;
+package entities;
 
-option go_package = "github.com/reviewpad/api/go/codehost";
+option go_package = "github.com/reviewpad/api/go/entities";
 
 enum Host {
     GITHUB = 0;

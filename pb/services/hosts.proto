@@ -6,7 +6,7 @@ syntax = "proto3";
 
 package services;
 
-import "codehost/code_host.proto";
+import "entities/code_host.proto";
 import "codehost/comments.proto";
 import "codehost/pull_request.proto";
 import "codehost/file.proto";
@@ -21,7 +21,7 @@ service Hosts {
 }
 
 message PostGeneralCommentRequest {
-  codehost.Host host = 1;
+  entities.Host host = 1;
   string host_uri = 2;
   string slug = 3;
   string external_repo_id = 4;
@@ -38,7 +38,7 @@ message PostGeneralCommentReply {
 message GetPullRequestRequest {
   string slug = 1;
   string external_repo_id = 2;
-  codehost.Host host = 3;
+  entities.Host host = 3;
   string host_uri = 4;
   int64 number = 5;
   string access_token = 6;
@@ -51,7 +51,7 @@ message GetPullRequestReply {
 message GetPullRequestFilesRequest {
   string slug = 1;
   string external_repo_id = 2;
-  codehost.Host host = 3;
+  entities.Host host = 3;
   string host_uri = 4;
   int64 number = 5;
   string access_token = 6;
