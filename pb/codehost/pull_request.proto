@@ -10,7 +10,7 @@ option go_package = "github.com/reviewpad/api/go/codehost";
 
 import "codehost/user.proto";
 import "codehost/label.proto";
-import "codehost/teams.proto";
+import "codehost/team.proto";
 import "codehost/milestone.proto";
 import "codehost/branch.proto";
 import "google/protobuf/timestamp.proto";

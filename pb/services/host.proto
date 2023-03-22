@@ -7,14 +7,13 @@ syntax = "proto3";
 package services;
 
 import "entities/code_host.proto";
-import "codehost/comments.proto";
+import "codehost/comment.proto";
 import "codehost/pull_request.proto";
 import "codehost/file.proto";
 
 option go_package = "github.com/reviewpad/api/go/services";
 
-service Hosts {
-  // Comments
+service Host {
   rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
   rpc GetPullRequest(GetPullRequestRequest) returns (GetPullRequestReply) {}
   rpc GetPullRequestFiles(GetPullRequestFilesRequest) returns (GetPullRequestFilesReply) {}

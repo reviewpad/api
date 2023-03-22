@@ -6,7 +6,7 @@
 // versions:
 // 	protoc-gen-go v1.30.0
 // 	protoc        v3.21.12
-// source: codehost/teams.proto
+// source: codehost/team.proto
 
 package codehost
 
@@ -37,7 +37,7 @@ type Team struct {
 func (x *Team) Reset() {
 	*x = Team{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_codehost_teams_proto_msgTypes[0]
+		mi := &file_codehost_team_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -50,7 +50,7 @@ func (x *Team) String() string {
 func (*Team) ProtoMessage() {}
 
 func (x *Team) ProtoReflect() protoreflect.Message {
-	mi := &file_codehost_teams_proto_msgTypes[0]
+	mi := &file_codehost_team_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63,7 +63,7 @@ func (x *Team) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Team.ProtoReflect.Descriptor instead.
 func (*Team) Descriptor() ([]byte, []int) {
-	return file_codehost_teams_proto_rawDescGZIP(), []int{0}
+	return file_codehost_team_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Team) GetId() string {
@@ -87,37 +87,37 @@ func (x *Team) GetSlug() string {
 	return ""
 }
 
-var File_codehost_teams_proto protoreflect.FileDescriptor
+var File_codehost_team_proto protoreflect.FileDescriptor
 
-var file_codehost_teams_proto_rawDesc = []byte{
-	0x0a, 0x14, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x73, 0x74, 0x2f, 0x74, 0x65, 0x61, 0x6d, 0x73,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x73, 0x74,
-	0x22, 0x3e, 0x0a, 0x04, 0x54, 0x65, 0x61, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04,
-	0x73, 0x6c, 0x75, 0x67, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x73, 0x6c, 0x75, 0x67,
-	0x42, 0x26, 0x5a, 0x24, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72,
-	0x65, 0x76, 0x69, 0x65, 0x77, 0x70, 0x61, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x6f, 0x2f,
-	0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x73, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+var file_codehost_team_proto_rawDesc = []byte{
+	0x0a, 0x13, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x73, 0x74, 0x2f, 0x74, 0x65, 0x61, 0x6d, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x63, 0x6f, 0x64, 0x65, 0x68, 0x6f, 0x73, 0x74, 0x22,
+	0x3e, 0x0a, 0x04, 0x54, 0x65, 0x61, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73,
+	0x6c, 0x75, 0x67, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x73, 0x6c, 0x75, 0x67, 0x42,
+	0x26, 0x5a, 0x24, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x65,
+	0x76, 0x69, 0x65, 0x77, 0x70, 0x61, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x6f, 0x2f, 0x63,
+	0x6f, 0x64, 0x65, 0x68, 0x6f, 0x73, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_codehost_teams_proto_rawDescOnce sync.Once
-	file_codehost_teams_proto_rawDescData = file_codehost_teams_proto_rawDesc
+	file_codehost_team_proto_rawDescOnce sync.Once
+	file_codehost_team_proto_rawDescData = file_codehost_team_proto_rawDesc
 )
 
-func file_codehost_teams_proto_rawDescGZIP() []byte {
-	file_codehost_teams_proto_rawDescOnce.Do(func() {
-		file_codehost_teams_proto_rawDescData = protoimpl.X.CompressGZIP(file_codehost_teams_proto_rawDescData)
+func file_codehost_team_proto_rawDescGZIP() []byte {
+	file_codehost_team_proto_rawDescOnce.Do(func() {
+		file_codehost_team_proto_rawDescData = protoimpl.X.CompressGZIP(file_codehost_team_proto_rawDescData)
 	})
-	return file_codehost_teams_proto_rawDescData
+	return file_codehost_team_proto_rawDescData
 }
 
-var file_codehost_teams_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_codehost_teams_proto_goTypes = []interface{}{
+var file_codehost_team_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_codehost_team_proto_goTypes = []interface{}{
 	(*Team)(nil), // 0: codehost.Team
 }
-var file_codehost_teams_proto_depIdxs = []int32{
+var file_codehost_team_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -125,13 +125,13 @@ var file_codehost_teams_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_codehost_teams_proto_init() }
-func file_codehost_teams_proto_init() {
-	if File_codehost_teams_proto != nil {
+func init() { file_codehost_team_proto_init() }
+func file_codehost_team_proto_init() {
+	if File_codehost_team_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_codehost_teams_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_codehost_team_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Team); i {
 			case 0:
 				return &v.state
@@ -148,18 +148,18 @@ func file_codehost_teams_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_codehost_teams_proto_rawDesc,
+			RawDescriptor: file_codehost_team_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_codehost_teams_proto_goTypes,
-		DependencyIndexes: file_codehost_teams_proto_depIdxs,
-		MessageInfos:      file_codehost_teams_proto_msgTypes,
+		GoTypes:           file_codehost_team_proto_goTypes,
+		DependencyIndexes: file_codehost_team_proto_depIdxs,
+		MessageInfos:      file_codehost_team_proto_msgTypes,
 	}.Build()
-	File_codehost_teams_proto = out.File
-	file_codehost_teams_proto_rawDesc = nil
-	file_codehost_teams_proto_goTypes = nil
-	file_codehost_teams_proto_depIdxs = nil
+	File_codehost_team_proto = out.File
+	file_codehost_team_proto_rawDesc = nil
+	file_codehost_team_proto_goTypes = nil
+	file_codehost_team_proto_depIdxs = nil
 }
