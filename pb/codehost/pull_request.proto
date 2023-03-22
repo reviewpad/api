@@ -4,30 +4,24 @@
 
 syntax = "proto3";
 
-package entities;
+package codehost;
 
-option go_package = "github.com/reviewpad/api/go/entities";
+option go_package = "github.com/reviewpad/api/go/codehost";
 
-import "entities/external_user.proto";
-import "entities/label.proto";
-import "entities/teams.proto";
-import "entities/milestone.proto";
-import "entities/branch.proto";
+import "codehost/user.proto";
+import "codehost/label.proto";
+import "codehost/teams.proto";
+import "codehost/milestone.proto";
+import "codehost/branch.proto";
 import "google/protobuf/timestamp.proto";
-import "entities/commit_file.proto";
 
-enum CodeReviewStatus {
-  OPEN = 0;
-  CLOSED = 1;
-}
-
-message CodeReview {
+message PullRequest {
   // The unique identifier of the code review. usually the id of the object we get for the GraphQL API
   string id = 1;
   int64 number = 2;
   string title = 3;
   string description = 4;
-  CodeReviewStatus status = 5;
+  PullRequestStatus status = 5;
   bool is_draft = 6;
   bool is_merged = 7;
   bool is_closed = 8;
@@ -42,20 +36,24 @@ message CodeReview {
   google.protobuf.Timestamp merged_at = 17;
   google.protobuf.Timestamp created_at = 18;
   google.protobuf.Timestamp updated_at = 19;
-  entities.Branch base = 20;
-  entities.Branch head = 21;
-  entities.ExternalUser author = 22;
-  repeated entities.ExternalUser assignees = 23;
-  repeated entities.Label labels = 24;
-  entities.Milestone milestone = 25;
+  codehost.Branch base = 20;
+  codehost.Branch head = 21;
+  codehost.User author = 22;
+  repeated codehost.User assignees = 23;
+  repeated codehost.Label labels = 24;
+  codehost.Milestone milestone = 25;
   RequestedReviewers requested_reviewers = 26;
-  // A JSON encoded presentation of the raw code review object
+  // A JSON encoded presentation of the raw pull request / merge request object
   // usually the response we get from the REST API of the provider
-  string raw = 27;
-  repeated entities.CommitFile files = 28;
+  string raw_rest_response = 27;
+}
+
+enum PullRequestStatus {
+  OPEN = 0;
+  CLOSED = 1;
 }
 
 message RequestedReviewers {
-  repeated entities.ExternalUser users = 1;
-  repeated entities.Team teams = 2;
+  repeated codehost.User users = 1;
+  repeated codehost.Team teams = 2;
 }

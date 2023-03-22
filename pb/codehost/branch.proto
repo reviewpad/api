@@ -4,14 +4,14 @@
 
 syntax = "proto3";
 
-package entities;
+package codehost;
 
-import "entities/git_repo.proto";
+import "codehost/repository.proto";
 
-option go_package = "github.com/reviewpad/api/go/entities";
+option go_package = "github.com/reviewpad/api/go/codehost";
 
 message Branch {
     string name = 1;
     string sha = 2;
-    entities.Repository repo = 3;
+    codehost.Repository repo = 3;
 }

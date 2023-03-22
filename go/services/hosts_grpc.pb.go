@@ -23,8 +23,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Hosts_PostGeneralComment_FullMethodName = "/services.Hosts/PostGeneralComment"
-	Hosts_GetCodeReview_FullMethodName      = "/services.Hosts/GetCodeReview"
+	Hosts_PostGeneralComment_FullMethodName  = "/services.Hosts/PostGeneralComment"
+	Hosts_GetPullRequest_FullMethodName      = "/services.Hosts/GetPullRequest"
+	Hosts_GetPullRequestFiles_FullMethodName = "/services.Hosts/GetPullRequestFiles"
 )
 
 // HostsClient is the client API for Hosts service.
@@ -33,7 +34,8 @@ const (
 type HostsClient interface {
 	// Comments
 	PostGeneralComment(ctx context.Context, in *PostGeneralCommentRequest, opts ...grpc.CallOption) (*PostGeneralCommentReply, error)
-	GetCodeReview(ctx context.Context, in *GetCodeReviewRequest, opts ...grpc.CallOption) (*GetCodeReviewReply, error)
+	GetPullRequest(ctx context.Context, in *GetPullRequestRequest, opts ...grpc.CallOption) (*GetPullRequestReply, error)
+	GetPullRequestFiles(ctx context.Context, in *GetPullRequestFilesRequest, opts ...grpc.CallOption) (*GetPullRequestFilesReply, error)
 }
 
 type hostsClient struct {
@@ -53,9 +55,18 @@ func (c *hostsClient) PostGeneralComment(ctx context.Context, in *PostGeneralCom
 	return out, nil
 }
 
-func (c *hostsClient) GetCodeReview(ctx context.Context, in *GetCodeReviewRequest, opts ...grpc.CallOption) (*GetCodeReviewReply, error) {
-	out := new(GetCodeReviewReply)
-	err := c.cc.Invoke(ctx, Hosts_GetCodeReview_FullMethodName, in, out, opts...)
+func (c *hostsClient) GetPullRequest(ctx context.Context, in *GetPullRequestRequest, opts ...grpc.CallOption) (*GetPullRequestReply, error) {
+	out := new(GetPullRequestReply)
+	err := c.cc.Invoke(ctx, Hosts_GetPullRequest_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hostsClient) GetPullRequestFiles(ctx context.Context, in *GetPullRequestFilesRequest, opts ...grpc.CallOption) (*GetPullRequestFilesReply, error) {
+	out := new(GetPullRequestFilesReply)
+	err := c.cc.Invoke(ctx, Hosts_GetPullRequestFiles_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +79,8 @@ func (c *hostsClient) GetCodeReview(ctx context.Context, in *GetCodeReviewReques
 type HostsServer interface {
 	// Comments
 	PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error)
-	GetCodeReview(context.Context, *GetCodeReviewRequest) (*GetCodeReviewReply, error)
+	GetPullRequest(context.Context, *GetPullRequestRequest) (*GetPullRequestReply, error)
+	GetPullRequestFiles(context.Context, *GetPullRequestFilesRequest) (*GetPullRequestFilesReply, error)
 	mustEmbedUnimplementedHostsServer()
 }
 
@@ -79,8 +91,11 @@ type UnimplementedHostsServer struct {
 func (UnimplementedHostsServer) PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostGeneralComment not implemented")
 }
-func (UnimplementedHostsServer) GetCodeReview(context.Context, *GetCodeReviewRequest) (*GetCodeReviewReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCodeReview not implemented")
+func (UnimplementedHostsServer) GetPullRequest(context.Context, *GetPullRequestRequest) (*GetPullRequestReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPullRequest not implemented")
+}
+func (UnimplementedHostsServer) GetPullRequestFiles(context.Context, *GetPullRequestFilesRequest) (*GetPullRequestFilesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPullRequestFiles not implemented")
 }
 func (UnimplementedHostsServer) mustEmbedUnimplementedHostsServer() {}
 
@@ -113,20 +128,38 @@ func _Hosts_PostGeneralComment_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Hosts_GetCodeReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCodeReviewRequest)
+func _Hosts_GetPullRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPullRequestRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HostsServer).GetCodeReview(ctx, in)
+		return srv.(HostsServer).GetPullRequest(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Hosts_GetCodeReview_FullMethodName,
+		FullMethod: Hosts_GetPullRequest_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HostsServer).GetCodeReview(ctx, req.(*GetCodeReviewRequest))
+		return srv.(HostsServer).GetPullRequest(ctx, req.(*GetPullRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Hosts_GetPullRequestFiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPullRequestFilesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HostsServer).GetPullRequestFiles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Hosts_GetPullRequestFiles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HostsServer).GetPullRequestFiles(ctx, req.(*GetPullRequestFilesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -143,8 +176,12 @@ var Hosts_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Hosts_PostGeneralComment_Handler,
 		},
 		{
-			MethodName: "GetCodeReview",
-			Handler:    _Hosts_GetCodeReview_Handler,
+			MethodName: "GetPullRequest",
+			Handler:    _Hosts_GetPullRequest_Handler,
+		},
+		{
+			MethodName: "GetPullRequestFiles",
+			Handler:    _Hosts_GetPullRequestFiles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

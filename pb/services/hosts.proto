@@ -6,61 +6,57 @@ syntax = "proto3";
 
 package services;
 
-import "entities/code_host.proto";
-import "entities/comments.proto";
-import "entities/code_review.proto";
+import "codehost/code_host.proto";
+import "codehost/comments.proto";
+import "codehost/pull_request.proto";
+import "codehost/file.proto";
 
 option go_package = "github.com/reviewpad/api/go/services";
 
 service Hosts {
   // Comments
   rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
-  rpc GetCodeReview(GetCodeReviewRequest) returns (GetCodeReviewReply) {}
+  rpc GetPullRequest(GetPullRequestRequest) returns (GetPullRequestReply) {}
+  rpc GetPullRequestFiles(GetPullRequestFilesRequest) returns (GetPullRequestFilesReply) {}
 }
 
 message PostGeneralCommentRequest {
-  entities.Host host = 1;
+  codehost.Host host = 1;
   string host_uri = 2;
   string slug = 3;
   string external_repo_id = 4;
   int32 review_number = 5;
   string external_review_id = 6;
   string access_token = 7;
-  entities.ReviewComment comment = 8;
+  codehost.ReviewComment comment = 8;
 }
 
 message PostGeneralCommentReply {
-  entities.ReviewComment comment = 1;
+  codehost.ReviewComment comment = 1;
 }
 
-// TODO: Remove this from the pb definitions
-message GetApiDistributionRequest {
-  entities.Host host = 1;
-  string host_uri = 2;
-  string access_token = 3;
-}
-
-message ApiRequestDistribution {
-  int64 total = 1;
-  float fraction = 2;
-  int64 total_cost = 3;
-}
-
-message GetApiDistributionReply {
-  int32 total = 1;
-  map<string, ApiRequestDistribution> distribution = 2;
-  int32 total_cost = 3;
-}
-
-message GetCodeReviewRequest {
+message GetPullRequestRequest {
   string slug = 1;
   string external_repo_id = 2;
-  entities.Host host = 3;
+  codehost.Host host = 3;
   string host_uri = 4;
-  int32 review_number = 5;
+  int64 number = 5;
   string access_token = 6;
 }
 
-message GetCodeReviewReply {
-  entities.CodeReview review = 1;
+message GetPullRequestReply {
+  codehost.PullRequest pull_request = 1;
+}
+
+message GetPullRequestFilesRequest {
+  string slug = 1;
+  string external_repo_id = 2;
+  codehost.Host host = 3;
+  string host_uri = 4;
+  int64 number = 5;
+  string access_token = 6;
+}
+
+message GetPullRequestFilesReply {
+  repeated codehost.File files = 1;
 }

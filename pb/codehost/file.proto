@@ -4,12 +4,12 @@
 
 syntax = "proto3";
 
-package entities;
+package codehost;
 
-option go_package = "github.com/reviewpad/api/go/entities";
+option go_package = "github.com/reviewpad/api/go/codehost";
 
-message CommitFile {
-    enum CommitFileStatus {
+message File {
+    enum FileStatus {
         UNKNOWN = 0;
         ADDED = 1;
         REMOVED = 2;
@@ -27,5 +27,5 @@ message CommitFile {
     int64 deletions_count = 5;
     int64 changes_count = 6;
     string patch = 7;
-    CommitFileStatus status = 8;
+    FileStatus status = 8;
 }

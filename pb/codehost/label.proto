@@ -4,14 +4,13 @@
 
 syntax = "proto3";
 
-package entities;
+package codehost;
 
-option go_package = "github.com/reviewpad/api/go/entities";
+option go_package = "github.com/reviewpad/api/go/codehost";
 
 message Label {
     string id = 1;
-    string external_id = 2;
-    string name = 3;
-    string description = 4;
-    string color = 5;
+    string name = 2;
+    string description = 3;
+    string color = 4;
 }

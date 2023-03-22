@@ -36,24 +36,44 @@ func (m *MockHostsClient) EXPECT() *MockHostsClientMockRecorder {
 	return m.recorder
 }
 
-// GetCodeReview mocks base method.
-func (m *MockHostsClient) GetCodeReview(arg0 context.Context, arg1 *services.GetCodeReviewRequest, arg2 ...grpc.CallOption) (*services.GetCodeReviewReply, error) {
+// GetPullRequest mocks base method.
+func (m *MockHostsClient) GetPullRequest(arg0 context.Context, arg1 *services.GetPullRequestRequest, arg2 ...grpc.CallOption) (*services.GetPullRequestReply, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
 	for _, a := range arg2 {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "GetCodeReview", varargs...)
-	ret0, _ := ret[0].(*services.GetCodeReviewReply)
+	ret := m.ctrl.Call(m, "GetPullRequest", varargs...)
+	ret0, _ := ret[0].(*services.GetPullRequestReply)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetCodeReview indicates an expected call of GetCodeReview.
-func (mr *MockHostsClientMockRecorder) GetCodeReview(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+// GetPullRequest indicates an expected call of GetPullRequest.
+func (mr *MockHostsClientMockRecorder) GetPullRequest(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCodeReview", reflect.TypeOf((*MockHostsClient)(nil).GetCodeReview), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPullRequest", reflect.TypeOf((*MockHostsClient)(nil).GetPullRequest), varargs...)
+}
+
+// GetPullRequestFiles mocks base method.
+func (m *MockHostsClient) GetPullRequestFiles(arg0 context.Context, arg1 *services.GetPullRequestFilesRequest, arg2 ...grpc.CallOption) (*services.GetPullRequestFilesReply, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{arg0, arg1}
+	for _, a := range arg2 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetPullRequestFiles", varargs...)
+	ret0, _ := ret[0].(*services.GetPullRequestFilesReply)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPullRequestFiles indicates an expected call of GetPullRequestFiles.
+func (mr *MockHostsClientMockRecorder) GetPullRequestFiles(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{arg0, arg1}, arg2...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPullRequestFiles", reflect.TypeOf((*MockHostsClient)(nil).GetPullRequestFiles), varargs...)
 }
 
 // PostGeneralComment mocks base method.

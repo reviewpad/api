@@ -4,9 +4,9 @@
 
 syntax = "proto3";
 
-package entities;
+package codehost;
 
-option go_package = "github.com/reviewpad/api/go/entities";
+option go_package = "github.com/reviewpad/api/go/codehost";
 
 message Milestone {
     string id = 1;

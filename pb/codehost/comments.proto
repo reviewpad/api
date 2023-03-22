@@ -4,11 +4,11 @@
 
 syntax = "proto3";
 
-package entities;
+package codehost;
 
-option go_package = "github.com/reviewpad/api/go/entities";
+option go_package = "github.com/reviewpad/api/go/codehost";
 
-import "entities/external_user.proto";
+import "codehost/user.proto";
 import "entities/file.proto";
 import "entities/git_diff.proto";
 import "entities/semantic_diff.proto";
@@ -17,7 +17,7 @@ message ReviewComment {
   string id = 1;
   // In GitLab / Bitbucket, you can have threads in the general comments
   string reply_to = 2;
-  entities.ExternalUser author = 3;
+  codehost.User author = 3;
   CommentSeverity severity = 4;
   string body = 5;
   string code_review_id = 6;
@@ -27,8 +27,8 @@ message ReviewComment {
   optional bool resolved = 10;
   CommentType type = 11;
   bool is_outdated = 12;
-  ChangesBlock context = 13;
-  FileInfoDiff file_info_diff = 14;
+  entities.ChangesBlock context = 13;
+  entities.FileInfoDiff file_info_diff = 14;
   CommentLineType line_type = 15;
   // Original information
   ReviewCommentLocation original_location = 16;
