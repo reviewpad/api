@@ -4,9 +4,9 @@
 # found in the LICENSE file.
 
 # Install protoc
-PROTOC_ZIP=protoc-21.4-osx-x86_64.zip
+PROTOC_ZIP=protoc-22.2-osx-x86_64.zip
 
-curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v21.4/$PROTOC_ZIP && \
+curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v22.2/$PROTOC_ZIP && \
             unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
             unzip -o $PROTOC_ZIP -d /usr/local 'include/*' && \
             rm -f $PROTOC_ZIP
