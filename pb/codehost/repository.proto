@@ -8,8 +8,6 @@ package codehost;
 
 option go_package = "github.com/reviewpad/api/go/codehost";
 
-import "codehost/user.proto";
-
 message Repository {
     string id = 1;
     string full_name = 2;
@@ -17,7 +15,7 @@ message Repository {
     string name = 4;
     string description = 5;
     bool is_fork = 6;
-    codehost.User owner = 21;
+    string owner = 7;
 }
 
 message Ref {
