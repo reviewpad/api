@@ -11,4 +11,4 @@ curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v22.2/$PR
             unzip -o $PROTOC_ZIP -d /usr/local 'include/*' && \
             rm -f $PROTOC_ZIP
 
-go get -u github.com/golang/protobuf/protoc-gen-go
+go install google.golang.org/protobuf/cmd/protoc-gen-go
