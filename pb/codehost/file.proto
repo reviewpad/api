@@ -1,0 +1,31 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package codehost;
+
+option go_package = "github.com/reviewpad/api/go/codehost";
+
+message File {
+    enum FileStatus {
+        UNKNOWN = 0;
+        ADDED = 1;
+        REMOVED = 2;
+        MODIFIED = 3;
+        RENAMED = 4;
+        COPIED = 5;
+        CHANGED = 6;
+        UNCHANGED = 7;
+    }
+
+    string sha = 1;
+    string filename = 2;
+    string previous_file_name = 3;
+    int64 additions_count = 4;
+    int64 deletions_count = 5;
+    int64 changes_count = 6;
+    string patch = 7;
+    FileStatus status = 8;
+}

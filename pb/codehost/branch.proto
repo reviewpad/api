@@ -1,0 +1,17 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package codehost;
+
+import "codehost/repository.proto";
+
+option go_package = "github.com/reviewpad/api/go/codehost";
+
+message Branch {
+    string name = 1;
+    string sha = 2;
+    codehost.Repository repo = 3;
+}

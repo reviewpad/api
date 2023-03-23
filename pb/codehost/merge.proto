@@ -1,0 +1,29 @@
+// Copyright (C) 2023 Explore.dev, Unipessoal Lda - All Rights Reserved
+// Unauthorized copying of this file, via any medium is strictly prohibited
+// Proprietary and confidential
+
+syntax = "proto3";
+
+package codehost;
+
+option go_package = "github.com/reviewpad/api/go/codehost";
+
+enum MergeMethod {
+    MERGE = 0;                    // Creates merge commit; blocks operation if there are conflicts
+    REBASE = 1;                   // Tries to rebase source branch into target branch; blocks operation if there are (intermediate) conflicts
+    SQUASH = 2;                   // Creates single squash commit; blocks operation if there are conflicts
+    FAST_FORWARD = 3;             // Tries to fast-forward target branch to source branch; creates merge commit otherwise if there are no conflicts
+    FAST_FORWARD_ONLY = 4;        // Tries to fast-forward target branch to source branch if up-to-date; blocks operation if outdated
+    REBASE_AND_MERGE = 5;         // Same as REBASE but with a merge commit in the end
+    SQUASH_FAST_FORWARD_ONLY = 6; // Same as SQUASH, except operation is blocked if source branch is outdated
+}
+
+message MergeMethodOptions {
+    MergeMethod merge_method = 1;
+    bool requires_message = 2;
+}
+
+enum DeleteHeadOption {
+    PRESERVE = 0;
+    DELETE = 1;
+}

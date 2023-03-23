@@ -1,0 +1,61 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package services;
+
+import "entities/code_host.proto";
+import "codehost/comment.proto";
+import "codehost/pull_request.proto";
+import "codehost/file.proto";
+
+option go_package = "github.com/reviewpad/api/go/services";
+
+service Host {
+  rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
+  rpc GetPullRequest(GetPullRequestRequest) returns (GetPullRequestReply) {}
+  rpc GetPullRequestFiles(GetPullRequestFilesRequest) returns (GetPullRequestFilesReply) {}
+}
+
+message PostGeneralCommentRequest {
+  entities.Host host = 1;
+  string host_uri = 2;
+  string slug = 3;
+  string external_repo_id = 4;
+  int32 review_number = 5;
+  string external_review_id = 6;
+  string access_token = 7;
+  codehost.ReviewComment comment = 8;
+}
+
+message PostGeneralCommentReply {
+  codehost.ReviewComment comment = 1;
+}
+
+message GetPullRequestRequest {
+  string slug = 1;
+  string external_repo_id = 2;
+  entities.Host host = 3;
+  string host_uri = 4;
+  int64 number = 5;
+  string access_token = 6;
+}
+
+message GetPullRequestReply {
+  codehost.PullRequest pull_request = 1;
+}
+
+message GetPullRequestFilesRequest {
+  string slug = 1;
+  string external_repo_id = 2;
+  entities.Host host = 3;
+  string host_uri = 4;
+  int64 number = 5;
+  string access_token = 6;
+}
+
+message GetPullRequestFilesReply {
+  repeated codehost.File files = 1;
+}

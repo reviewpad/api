@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func NewCodeHostClient(endpoint string) (services.HostsClient, *grpc.ClientConn, error) {
+func NewCodeHostClient(endpoint string) (services.HostClient, *grpc.ClientConn, error) {
 	defaultOptions := grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(419430400))
 	transportCredentials := grpc.WithTransportCredentials(insecure.NewCredentials())
 
@@ -19,7 +19,7 @@ func NewCodeHostClient(endpoint string) (services.HostsClient, *grpc.ClientConn,
 		return nil, nil, err
 	}
 
-	hostClient := services.NewHostsClient(hostConnection)
+	hostClient := services.NewHostClient(hostConnection)
 
 	return hostClient, hostConnection, nil
 }
