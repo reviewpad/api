@@ -51,6 +51,8 @@ message PullRequest {
 enum PullRequestStatus {
   OPEN = 0;
   CLOSED = 1;
+  MERGED = 2;
+  LOCKED = 3;
 }
 
 message RequestedReviewers {
