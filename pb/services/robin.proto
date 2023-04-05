@@ -12,6 +12,7 @@ option go_package = "github.com/reviewpad/api/go/services";
 
 service Robin {
     rpc Prompt(PromptRequest) returns (PromptReply) {}
+    rpc RawPrompt(RawPromptRequest) returns (PromptReply) {}
     rpc Summarize(SummarizeRequest) returns (SummarizeReply) {}
 }
 
@@ -25,6 +26,15 @@ message PromptRequest {
 
 message PromptReply {
     string reply = 1;
+}
+
+message RawPromptRequest {
+    string token = 1;
+    entities.TargetEntity target = 2;
+    string system_prompt = 3;
+    string user_prompt = 4;
+    bool act = 5;
+    string model = 6;
 }
 
 message SummarizeRequest {
