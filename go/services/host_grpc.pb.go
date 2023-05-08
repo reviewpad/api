@@ -18,9 +18,11 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type HostClient interface {
-	PostGeneralComment(ctx context.Context, in *PostGeneralCommentRequest, opts ...grpc.CallOption) (*PostGeneralCommentReply, error)
 	GetPullRequest(ctx context.Context, in *GetPullRequestRequest, opts ...grpc.CallOption) (*GetPullRequestReply, error)
 	GetPullRequestFiles(ctx context.Context, in *GetPullRequestFilesRequest, opts ...grpc.CallOption) (*GetPullRequestFilesReply, error)
+	PostDiffComment(ctx context.Context, in *PostDiffCommentRequest, opts ...grpc.CallOption) (*PostDiffCommentReply, error)
+	PostGeneralComment(ctx context.Context, in *PostGeneralCommentRequest, opts ...grpc.CallOption) (*PostGeneralCommentReply, error)
+	SubmitUserReview(ctx context.Context, in *SubmitUserReviewRequest, opts ...grpc.CallOption) (*SubmitUserReviewReply, error)
 }
 
 type hostClient struct {
@@ -29,15 +31,6 @@ type hostClient struct {
 
 func NewHostClient(cc grpc.ClientConnInterface) HostClient {
 	return &hostClient{cc}
-}
-
-func (c *hostClient) PostGeneralComment(ctx context.Context, in *PostGeneralCommentRequest, opts ...grpc.CallOption) (*PostGeneralCommentReply, error) {
-	out := new(PostGeneralCommentReply)
-	err := c.cc.Invoke(ctx, "/services.Host/PostGeneralComment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *hostClient) GetPullRequest(ctx context.Context, in *GetPullRequestRequest, opts ...grpc.CallOption) (*GetPullRequestReply, error) {
@@ -58,13 +51,42 @@ func (c *hostClient) GetPullRequestFiles(ctx context.Context, in *GetPullRequest
 	return out, nil
 }
 
+func (c *hostClient) PostDiffComment(ctx context.Context, in *PostDiffCommentRequest, opts ...grpc.CallOption) (*PostDiffCommentReply, error) {
+	out := new(PostDiffCommentReply)
+	err := c.cc.Invoke(ctx, "/services.Host/PostDiffComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hostClient) PostGeneralComment(ctx context.Context, in *PostGeneralCommentRequest, opts ...grpc.CallOption) (*PostGeneralCommentReply, error) {
+	out := new(PostGeneralCommentReply)
+	err := c.cc.Invoke(ctx, "/services.Host/PostGeneralComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hostClient) SubmitUserReview(ctx context.Context, in *SubmitUserReviewRequest, opts ...grpc.CallOption) (*SubmitUserReviewReply, error) {
+	out := new(SubmitUserReviewReply)
+	err := c.cc.Invoke(ctx, "/services.Host/SubmitUserReview", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HostServer is the server API for Host service.
 // All implementations must embed UnimplementedHostServer
 // for forward compatibility
 type HostServer interface {
-	PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error)
 	GetPullRequest(context.Context, *GetPullRequestRequest) (*GetPullRequestReply, error)
 	GetPullRequestFiles(context.Context, *GetPullRequestFilesRequest) (*GetPullRequestFilesReply, error)
+	PostDiffComment(context.Context, *PostDiffCommentRequest) (*PostDiffCommentReply, error)
+	PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error)
+	SubmitUserReview(context.Context, *SubmitUserReviewRequest) (*SubmitUserReviewReply, error)
 	mustEmbedUnimplementedHostServer()
 }
 
@@ -72,14 +94,20 @@ type HostServer interface {
 type UnimplementedHostServer struct {
 }
 
-func (UnimplementedHostServer) PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PostGeneralComment not implemented")
-}
 func (UnimplementedHostServer) GetPullRequest(context.Context, *GetPullRequestRequest) (*GetPullRequestReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPullRequest not implemented")
 }
 func (UnimplementedHostServer) GetPullRequestFiles(context.Context, *GetPullRequestFilesRequest) (*GetPullRequestFilesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPullRequestFiles not implemented")
+}
+func (UnimplementedHostServer) PostDiffComment(context.Context, *PostDiffCommentRequest) (*PostDiffCommentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostDiffComment not implemented")
+}
+func (UnimplementedHostServer) PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostGeneralComment not implemented")
+}
+func (UnimplementedHostServer) SubmitUserReview(context.Context, *SubmitUserReviewRequest) (*SubmitUserReviewReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitUserReview not implemented")
 }
 func (UnimplementedHostServer) mustEmbedUnimplementedHostServer() {}
 
@@ -92,24 +120,6 @@ type UnsafeHostServer interface {
 
 func RegisterHostServer(s grpc.ServiceRegistrar, srv HostServer) {
 	s.RegisterService(&Host_ServiceDesc, srv)
-}
-
-func _Host_PostGeneralComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PostGeneralCommentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(HostServer).PostGeneralComment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/services.Host/PostGeneralComment",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HostServer).PostGeneralComment(ctx, req.(*PostGeneralCommentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Host_GetPullRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -148,6 +158,60 @@ func _Host_GetPullRequestFiles_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Host_PostDiffComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostDiffCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HostServer).PostDiffComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Host/PostDiffComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HostServer).PostDiffComment(ctx, req.(*PostDiffCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Host_PostGeneralComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostGeneralCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HostServer).PostGeneralComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Host/PostGeneralComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HostServer).PostGeneralComment(ctx, req.(*PostGeneralCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Host_SubmitUserReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitUserReviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HostServer).SubmitUserReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Host/SubmitUserReview",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HostServer).SubmitUserReview(ctx, req.(*SubmitUserReviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Host_ServiceDesc is the grpc.ServiceDesc for Host service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -156,16 +220,24 @@ var Host_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*HostServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "PostGeneralComment",
-			Handler:    _Host_PostGeneralComment_Handler,
-		},
-		{
 			MethodName: "GetPullRequest",
 			Handler:    _Host_GetPullRequest_Handler,
 		},
 		{
 			MethodName: "GetPullRequestFiles",
 			Handler:    _Host_GetPullRequestFiles_Handler,
+		},
+		{
+			MethodName: "PostDiffComment",
+			Handler:    _Host_PostDiffComment_Handler,
+		},
+		{
+			MethodName: "PostGeneralComment",
+			Handler:    _Host_PostGeneralComment_Handler,
+		},
+		{
+			MethodName: "SubmitUserReview",
+			Handler:    _Host_SubmitUserReview_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

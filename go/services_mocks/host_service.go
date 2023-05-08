@@ -76,6 +76,26 @@ func (mr *MockHostClientMockRecorder) GetPullRequestFiles(arg0, arg1 interface{}
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPullRequestFiles", reflect.TypeOf((*MockHostClient)(nil).GetPullRequestFiles), varargs...)
 }
 
+// PostDiffComment mocks base method.
+func (m *MockHostClient) PostDiffComment(arg0 context.Context, arg1 *services.PostDiffCommentRequest, arg2 ...grpc.CallOption) (*services.PostDiffCommentReply, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{arg0, arg1}
+	for _, a := range arg2 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "PostDiffComment", varargs...)
+	ret0, _ := ret[0].(*services.PostDiffCommentReply)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PostDiffComment indicates an expected call of PostDiffComment.
+func (mr *MockHostClientMockRecorder) PostDiffComment(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{arg0, arg1}, arg2...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostDiffComment", reflect.TypeOf((*MockHostClient)(nil).PostDiffComment), varargs...)
+}
+
 // PostGeneralComment mocks base method.
 func (m *MockHostClient) PostGeneralComment(arg0 context.Context, arg1 *services.PostGeneralCommentRequest, arg2 ...grpc.CallOption) (*services.PostGeneralCommentReply, error) {
 	m.ctrl.T.Helper()
@@ -94,4 +114,24 @@ func (mr *MockHostClientMockRecorder) PostGeneralComment(arg0, arg1 interface{},
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostGeneralComment", reflect.TypeOf((*MockHostClient)(nil).PostGeneralComment), varargs...)
+}
+
+// SubmitUserReview mocks base method.
+func (m *MockHostClient) SubmitUserReview(arg0 context.Context, arg1 *services.SubmitUserReviewRequest, arg2 ...grpc.CallOption) (*services.SubmitUserReviewReply, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{arg0, arg1}
+	for _, a := range arg2 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SubmitUserReview", varargs...)
+	ret0, _ := ret[0].(*services.SubmitUserReviewReply)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SubmitUserReview indicates an expected call of SubmitUserReview.
+func (mr *MockHostClientMockRecorder) SubmitUserReview(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{arg0, arg1}, arg2...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitUserReview", reflect.TypeOf((*MockHostClient)(nil).SubmitUserReview), varargs...)
 }
