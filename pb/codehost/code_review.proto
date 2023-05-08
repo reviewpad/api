@@ -1,0 +1,37 @@
+// Copyright 2023 Explore.dev Unipessoal Lda. All Rights Reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
+syntax = "proto3";
+
+package codehost;
+
+option go_package = "github.com/reviewpad/api/go/codehost";
+
+enum UserReviewStatus {
+  USER_REQUESTED_CHANGES = 0;
+  USER_APPROVED = 1;
+  USER_COMMENTED = 2;
+  PENDING = 3;
+  DISMISSED = 4;
+}
+
+enum ReviewEvent {
+  APPROVE = 0;
+  REQUEST_CHANGES = 1;
+  COMMENT = 2;
+  UNAPPROVE = 3;
+}
+
+message UserReview {
+  string id = 1;
+  string reviewer_id = 2;
+  string base_commit_id = 3;
+  string head_commit_id = 4;
+  string body = 5;
+  UserReviewStatus status = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+  string external_id = 9;
+}
+
