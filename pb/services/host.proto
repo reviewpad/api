@@ -10,28 +10,16 @@ import "entities/code_host.proto";
 import "codehost/comment.proto";
 import "codehost/pull_request.proto";
 import "codehost/file.proto";
+import "codehost/code_review.proto";
 
 option go_package = "github.com/reviewpad/api/go/services";
 
 service Host {
-  rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
   rpc GetPullRequest(GetPullRequestRequest) returns (GetPullRequestReply) {}
   rpc GetPullRequestFiles(GetPullRequestFilesRequest) returns (GetPullRequestFilesReply) {}
-}
-
-message PostGeneralCommentRequest {
-  entities.Host host = 1;
-  string host_uri = 2;
-  string slug = 3;
-  string external_repo_id = 4;
-  int32 review_number = 5;
-  string external_review_id = 6;
-  string access_token = 7;
-  codehost.ReviewComment comment = 8;
-}
-
-message PostGeneralCommentReply {
-  codehost.ReviewComment comment = 1;
+  rpc PostDiffComment(PostDiffCommentRequest) returns (PostDiffCommentReply) {}
+  rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
+  rpc SubmitUserReview(SubmitUserReviewRequest) returns (SubmitUserReviewReply) {}
 }
 
 message GetPullRequestRequest {
@@ -58,4 +46,58 @@ message GetPullRequestFilesRequest {
 
 message GetPullRequestFilesReply {
   repeated codehost.File files = 1;
+}
+
+message PostDiffCommentRequest {
+  entities.Host host = 1;
+  string host_uri = 2;
+  string slug = 3;
+  string external_repo_id = 4;
+  int32 review_number = 5;
+  string external_review_id = 6;
+  string base_commit_id = 7;
+  string head_commit_id = 8;
+  string access_token = 9;
+  codehost.ReviewComment comment = 10;
+}
+
+message PostDiffCommentReply {
+  codehost.ReviewComment comment = 1;
+  bool requires_refresh = 2;
+}
+
+message PostGeneralCommentRequest {
+  entities.Host host = 1;
+  string host_uri = 2;
+  string slug = 3;
+  string external_repo_id = 4;
+  int32 review_number = 5;
+  string external_review_id = 6;
+  string access_token = 7;
+  codehost.ReviewComment comment = 8;
+}
+
+message PostGeneralCommentReply {
+  codehost.ReviewComment comment = 1;
+}
+
+message SubmitUserReviewRequest {
+  entities.Host host = 1;
+  string host_uri = 2;
+  string slug = 3;
+  string external_repo_id = 4;
+  string external_code_review_node_id = 5;
+  string access_token = 6;
+  string body = 7;
+  codehost.ReviewEvent event = 8;
+  int32 review_number = 9;
+  string base_commit_id = 10;
+  string head_commit_id = 11;
+  repeated codehost.ReviewComment comments = 12;
+}
+
+message SubmitUserReviewReply {
+  codehost.UserReview review = 1;
+  repeated codehost.ReviewComment comments = 2;
+  codehost.ReviewComment posted_general_comment = 3;
 }
