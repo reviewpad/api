@@ -33,6 +33,7 @@ tasks:
     cmds:
       - mockgen --build_flags=--mod=mod --destination services_mocks/semantic_service.go --package services_mocks github.com/reviewpad/api/go/services SemanticClient
       - mockgen --build_flags=--mod=mod --destination services_mocks/host_service.go --package services_mocks github.com/reviewpad/api/go/services HostClient
+      - mockgen --build_flags=--mod=mod --destination services_mocks/robin_service.go --package services_mocks github.com/reviewpad/api/go/services RobinClient
     sources:
       - ./services/*.go
 
