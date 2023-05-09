@@ -87,9 +87,10 @@ message ReplyDiffCommentRequest {
   string host_uri = 2;
   string slug = 3;
   string external_repo_id = 4;
-  string external_review_id = 5;
-  string access_token = 6;
-  codehost.ReviewComment comment = 7;
+  int32 review_number = 5;
+  string external_review_id = 6;
+  string access_token = 7;
+  codehost.ReviewComment comment = 8;
 }
 
 message ReplyDiffCommentReply {
