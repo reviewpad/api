@@ -11,6 +11,7 @@ option go_package = "github.com/reviewpad/api/go/entities";
 enum TargetEntityKind {
     PULL_REQUEST = 0;
     ISSUE = 1;
+    REPOSITORY = 2;
 }
 
 message TargetEntity {
