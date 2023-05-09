@@ -11,9 +11,22 @@ import "entities/target_entity.proto";
 option go_package = "github.com/reviewpad/api/go/services";
 
 service Robin {
+    rpc Explain(ExplainRequest) returns (ExplainReply) {}
     rpc Prompt(PromptRequest) returns (PromptReply) {}
     rpc RawPrompt(RawPromptRequest) returns (PromptReply) {}
     rpc Summarize(SummarizeRequest) returns (SummarizeReply) {}
+}
+
+message ExplainRequest {
+    string token = 1;
+    entities.TargetEntity target = 2;
+    string comment_id = 3;
+    bool act = 4;
+    string model = 5;
+}
+
+message ExplainReply {
+    string explanation = 1;
 }
 
 message PromptRequest {
@@ -48,3 +61,4 @@ message SummarizeRequest {
 message SummarizeReply {
     string summary = 1;
 }
+

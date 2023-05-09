@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RobinClient interface {
+	Explain(ctx context.Context, in *ExplainRequest, opts ...grpc.CallOption) (*ExplainReply, error)
 	Prompt(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*PromptReply, error)
 	RawPrompt(ctx context.Context, in *RawPromptRequest, opts ...grpc.CallOption) (*PromptReply, error)
 	Summarize(ctx context.Context, in *SummarizeRequest, opts ...grpc.CallOption) (*SummarizeReply, error)
@@ -29,6 +30,15 @@ type robinClient struct {
 
 func NewRobinClient(cc grpc.ClientConnInterface) RobinClient {
 	return &robinClient{cc}
+}
+
+func (c *robinClient) Explain(ctx context.Context, in *ExplainRequest, opts ...grpc.CallOption) (*ExplainReply, error) {
+	out := new(ExplainReply)
+	err := c.cc.Invoke(ctx, "/services.Robin/Explain", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *robinClient) Prompt(ctx context.Context, in *PromptRequest, opts ...grpc.CallOption) (*PromptReply, error) {
@@ -62,6 +72,7 @@ func (c *robinClient) Summarize(ctx context.Context, in *SummarizeRequest, opts 
 // All implementations must embed UnimplementedRobinServer
 // for forward compatibility
 type RobinServer interface {
+	Explain(context.Context, *ExplainRequest) (*ExplainReply, error)
 	Prompt(context.Context, *PromptRequest) (*PromptReply, error)
 	RawPrompt(context.Context, *RawPromptRequest) (*PromptReply, error)
 	Summarize(context.Context, *SummarizeRequest) (*SummarizeReply, error)
@@ -72,6 +83,9 @@ type RobinServer interface {
 type UnimplementedRobinServer struct {
 }
 
+func (UnimplementedRobinServer) Explain(context.Context, *ExplainRequest) (*ExplainReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Explain not implemented")
+}
 func (UnimplementedRobinServer) Prompt(context.Context, *PromptRequest) (*PromptReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Prompt not implemented")
 }
@@ -92,6 +106,24 @@ type UnsafeRobinServer interface {
 
 func RegisterRobinServer(s grpc.ServiceRegistrar, srv RobinServer) {
 	s.RegisterService(&Robin_ServiceDesc, srv)
+}
+
+func _Robin_Explain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExplainRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RobinServer).Explain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Robin/Explain",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RobinServer).Explain(ctx, req.(*ExplainRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Robin_Prompt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -155,6 +187,10 @@ var Robin_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "services.Robin",
 	HandlerType: (*RobinServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Explain",
+			Handler:    _Robin_Explain_Handler,
+		},
 		{
 			MethodName: "Prompt",
 			Handler:    _Robin_Prompt_Handler,

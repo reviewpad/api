@@ -36,6 +36,26 @@ func (m *MockRobinClient) EXPECT() *MockRobinClientMockRecorder {
 	return m.recorder
 }
 
+// Explain mocks base method.
+func (m *MockRobinClient) Explain(arg0 context.Context, arg1 *services.ExplainRequest, arg2 ...grpc.CallOption) (*services.ExplainReply, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{arg0, arg1}
+	for _, a := range arg2 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Explain", varargs...)
+	ret0, _ := ret[0].(*services.ExplainReply)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Explain indicates an expected call of Explain.
+func (mr *MockRobinClientMockRecorder) Explain(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{arg0, arg1}, arg2...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Explain", reflect.TypeOf((*MockRobinClient)(nil).Explain), varargs...)
+}
+
 // Prompt mocks base method.
 func (m *MockRobinClient) Prompt(arg0 context.Context, arg1 *services.PromptRequest, arg2 ...grpc.CallOption) (*services.PromptReply, error) {
 	m.ctrl.T.Helper()
