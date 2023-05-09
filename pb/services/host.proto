@@ -19,6 +19,7 @@ service Host {
   rpc GetPullRequestFiles(GetPullRequestFilesRequest) returns (GetPullRequestFilesReply) {}
   rpc PostDiffComment(PostDiffCommentRequest) returns (PostDiffCommentReply) {}
   rpc PostGeneralComment(PostGeneralCommentRequest) returns (PostGeneralCommentReply) {}
+  rpc ReplyDiffComment(ReplyDiffCommentRequest) returns (ReplyDiffCommentReply) {}
   rpc SubmitUserReview(SubmitUserReviewRequest) returns (SubmitUserReviewReply) {}
 }
 
@@ -79,6 +80,19 @@ message PostGeneralCommentRequest {
 
 message PostGeneralCommentReply {
   codehost.ReviewComment comment = 1;
+}
+
+message ReplyDiffCommentRequest {
+  entities.Host host = 1;
+  string host_uri = 2;
+  string slug = 3;
+  string external_repo_id = 4;
+  string external_review_id = 5;
+  string access_token = 6;
+  codehost.ReviewComment comment = 7;
+}
+
+message ReplyDiffCommentReply {
 }
 
 message SubmitUserReviewRequest {

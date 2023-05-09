@@ -22,6 +22,7 @@ type HostClient interface {
 	GetPullRequestFiles(ctx context.Context, in *GetPullRequestFilesRequest, opts ...grpc.CallOption) (*GetPullRequestFilesReply, error)
 	PostDiffComment(ctx context.Context, in *PostDiffCommentRequest, opts ...grpc.CallOption) (*PostDiffCommentReply, error)
 	PostGeneralComment(ctx context.Context, in *PostGeneralCommentRequest, opts ...grpc.CallOption) (*PostGeneralCommentReply, error)
+	ReplyDiffComment(ctx context.Context, in *ReplyDiffCommentRequest, opts ...grpc.CallOption) (*ReplyDiffCommentReply, error)
 	SubmitUserReview(ctx context.Context, in *SubmitUserReviewRequest, opts ...grpc.CallOption) (*SubmitUserReviewReply, error)
 }
 
@@ -69,6 +70,15 @@ func (c *hostClient) PostGeneralComment(ctx context.Context, in *PostGeneralComm
 	return out, nil
 }
 
+func (c *hostClient) ReplyDiffComment(ctx context.Context, in *ReplyDiffCommentRequest, opts ...grpc.CallOption) (*ReplyDiffCommentReply, error) {
+	out := new(ReplyDiffCommentReply)
+	err := c.cc.Invoke(ctx, "/services.Host/ReplyDiffComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hostClient) SubmitUserReview(ctx context.Context, in *SubmitUserReviewRequest, opts ...grpc.CallOption) (*SubmitUserReviewReply, error) {
 	out := new(SubmitUserReviewReply)
 	err := c.cc.Invoke(ctx, "/services.Host/SubmitUserReview", in, out, opts...)
@@ -86,6 +96,7 @@ type HostServer interface {
 	GetPullRequestFiles(context.Context, *GetPullRequestFilesRequest) (*GetPullRequestFilesReply, error)
 	PostDiffComment(context.Context, *PostDiffCommentRequest) (*PostDiffCommentReply, error)
 	PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error)
+	ReplyDiffComment(context.Context, *ReplyDiffCommentRequest) (*ReplyDiffCommentReply, error)
 	SubmitUserReview(context.Context, *SubmitUserReviewRequest) (*SubmitUserReviewReply, error)
 	mustEmbedUnimplementedHostServer()
 }
@@ -105,6 +116,9 @@ func (UnimplementedHostServer) PostDiffComment(context.Context, *PostDiffComment
 }
 func (UnimplementedHostServer) PostGeneralComment(context.Context, *PostGeneralCommentRequest) (*PostGeneralCommentReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostGeneralComment not implemented")
+}
+func (UnimplementedHostServer) ReplyDiffComment(context.Context, *ReplyDiffCommentRequest) (*ReplyDiffCommentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReplyDiffComment not implemented")
 }
 func (UnimplementedHostServer) SubmitUserReview(context.Context, *SubmitUserReviewRequest) (*SubmitUserReviewReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubmitUserReview not implemented")
@@ -194,6 +208,24 @@ func _Host_PostGeneralComment_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Host_ReplyDiffComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReplyDiffCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HostServer).ReplyDiffComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.Host/ReplyDiffComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HostServer).ReplyDiffComment(ctx, req.(*ReplyDiffCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Host_SubmitUserReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SubmitUserReviewRequest)
 	if err := dec(in); err != nil {
@@ -234,6 +266,10 @@ var Host_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PostGeneralComment",
 			Handler:    _Host_PostGeneralComment_Handler,
+		},
+		{
+			MethodName: "ReplyDiffComment",
+			Handler:    _Host_ReplyDiffComment_Handler,
 		},
 		{
 			MethodName: "SubmitUserReview",
