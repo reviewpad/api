@@ -1,4 +1,2 @@
-api-version: reviewpad.com/v3.x
-
-extends: 
+extends:
   - https://github.com/reviewpad/.github/blob/main/reviewpad-models/common.yml
