@@ -11,10 +11,20 @@ import "entities/target_entity.proto";
 option go_package = "github.com/reviewpad/api/go/services";
 
 service Robin {
+    rpc ChatInCodeHost(ChatInCodeHostRequest) returns (ChatInCodeHostReply) {}
     rpc Explain(ExplainRequest) returns (ExplainReply) {}
     rpc Prompt(PromptRequest) returns (PromptReply) {}
     rpc RawPrompt(RawPromptRequest) returns (PromptReply) {}
     rpc Summarize(SummarizeRequest) returns (SummarizeReply) {}
+}
+
+message ChatInCodeHostRequest {
+    string token = 1;
+    entities.TargetEntity target = 2;
+}
+
+message ChatInCodeHostReply {
+    string reply = 1;
 }
 
 message ExplainRequest {
