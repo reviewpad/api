@@ -12,6 +12,7 @@ enum TargetEntityKind {
     PULL_REQUEST = 0;
     ISSUE = 1;
     REPOSITORY = 2;
+    DISCUSSION = 3;
 }
 
 message TargetEntity {
