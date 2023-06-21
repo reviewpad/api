@@ -1,4 +1,4 @@
-# Reviewpad gRPC lib
+# gRPC lib
 
 This repository contains the gRPC specifications used in Reviewpad.
 
