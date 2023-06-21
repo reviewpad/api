@@ -1,4 +1,4 @@
-# Reviewpad API
+# Reviewpad gRPC lib
 
 This repository contains the gRPC specifications used in Reviewpad.
 
@@ -16,4 +16,4 @@ cargo build
 
 Reviewpad is available under the GNU Lesser General Public License v3.0 license.
 
-See LICENSE for the full license text.
+See [LICENSE](LICENSE) for the full license text.
