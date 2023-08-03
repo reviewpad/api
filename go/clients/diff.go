@@ -5,14 +5,16 @@
 package clients
 
 import (
+	"crypto/tls"
+
 	"github.com/reviewpad/api/go/services"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
 )
 
 func NewDiffClient(endpoint string) (services.DiffClient, *grpc.ClientConn, error) {
 	defaultOptions := grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(419430400))
-	transportCredentials := grpc.WithTransportCredentials(insecure.NewCredentials())
+	transportCredentials := grpc.WithTransportCredentials(credentials.NewTLS((&tls.Config{})))
 
 	diffConnection, err := grpc.Dial(endpoint, transportCredentials, defaultOptions)
 	if err != nil {
