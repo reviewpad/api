@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 fn main() {
-    tonic_build::configure()
-        .compile(&["pb/services/semantic.proto"], 
-                 &["pb"]).unwrap();
+    tonic_prost_build::configure()
+        .compile_protos(&["pb/services/semantic.proto"],
+                        &["pb"]).unwrap();
 }
