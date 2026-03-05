@@ -15,7 +15,7 @@ tasks:
   build:
     deps:
       - gen-proto
-      - gomock
+      - mockgen
     summary: |
       Builds Go files.
 
@@ -25,7 +25,7 @@ tasks:
     sources:
       - ./**/*.go
 
-  gomock:
+  mockgen:
     summary: |
       Generates mocks for services.
 
